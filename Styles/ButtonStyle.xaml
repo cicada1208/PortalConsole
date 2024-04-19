@@ -1,0 +1,111 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.Buttons.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Button.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <Style 
+        x:Key = "Style.Button.AutoSize" 
+        BasedOn="{StaticResource MahApps.Styles.Button}"
+        TargetType = "Button" >
+        <Setter Property="Width" Value="Auto" />
+        <Setter Property="Height" Value="Auto" />
+        <Setter Property="Padding" Value="4" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <!--<Style.Triggers>
+            --><!--PropertyTriggers: sets property values or starts actions based on the value of a property is called a property trigger.--><!--
+            <Trigger Property="IsMouseOver"  Value="True">
+                <Setter Property="Foreground" Value="LightSteelBlue" />
+            </Trigger>
+
+            --><!--EventTriggers: starts a set of actions based on the occurrence of an event--><!--
+            <EventTrigger RoutedEvent="Mouse.MouseEnter">
+                <EventTrigger.Actions>
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation 
+                                    Storyboard.TargetProperty="Height"
+                                    Duration="0:0:0.1"
+                                    To="28" />
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger.Actions>
+            </EventTrigger>
+            <EventTrigger RoutedEvent="Mouse.MouseLeave">
+                <EventTrigger.Actions>
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation
+                                    Storyboard.TargetProperty="Height"
+                                    Duration="0:0:0.1" />
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger.Actions>
+            </EventTrigger>
+        </Style.Triggers>-->
+    </Style>
+
+    <Style 
+        x:Key = "Style.Button.Slim" 
+        BasedOn="{StaticResource Style.Button.AutoSize}"
+        TargetType = "Button" >
+        <Setter Property="MinWidth" Value="100" />
+    </Style>
+
+    <Style 
+        x:Key = "Style.Button.Pic" 
+        BasedOn="{StaticResource Style.Button.AutoSize}"
+        TargetType = "Button" >
+        <Setter Property="Width" Value="40" />
+        <Setter Property="Padding" Value="0" />
+    </Style>
+
+    <Style 
+        x:Key = "Style.Button.DataGridPic" 
+        BasedOn="{StaticResource Style.Button.Pic}"
+        TargetType = "Button" >
+        <Setter Property="Width" Value="25" />
+    </Style>
+
+    <Style 
+        x:Key = "Style.Button.MainList" 
+        BasedOn="{StaticResource Style.Button.Slim}"
+        TargetType = "Button" >
+        <Setter Property="Margin" Value="45,5" />
+    </Style>
+
+    <Style 
+        x:Key = "Style.Button.MaterialDesignRaised.AutoSize" 
+        BasedOn="{StaticResource MaterialDesignRaisedButton}"
+        TargetType = "Button" >
+        <Setter Property="FontFamily" Value="{DynamicResource MaterialDesignFont}" />
+        <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Button}" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+    </Style>
+
+    <Style 
+        x:Key = "Style.Button.MaterialDesignRaised.Slim" 
+        BasedOn="{StaticResource Style.Button.MaterialDesignRaised.AutoSize}"
+        TargetType = "Button" >
+        <Setter Property="MinWidth" Value="100" />
+    </Style>
+
+    <Style 
+        x:Key = "Style.Button.MaterialDesign.DataGridAction" 
+        BasedOn="{StaticResource MaterialDesignIconButton}"
+        TargetType = "Button" >
+        <Setter Property="Height" Value="26" />
+        <Setter Property="Width" Value="26" />
+    </Style>
+
+    <Style 
+        x:Key = "Style.Button.MaterialDesignRaised.MainList" 
+        BasedOn="{StaticResource Style.Button.MaterialDesignRaised.Slim}"
+        TargetType = "Button" >
+        <Setter Property="Margin" Value="45,5" />
+    </Style>
+
+</ResourceDictionary>

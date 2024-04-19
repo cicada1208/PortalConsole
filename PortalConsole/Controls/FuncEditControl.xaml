@@ -1,0 +1,217 @@
+﻿<UserControl x:Class="PortalConsole.Controls.FuncEditControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:wi="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:local="clr-namespace:PortalConsole.Controls"
+             xmlns:viewmodels="clr-namespace:ViewModels;assembly=ViewModels"
+             xmlns:converters="clr-namespace:Lib.Wpf.ValueConverters;assembly=Lib.Wpf" 
+             mc:Ignorable="d" 
+             d:DataContext="{d:DesignInstance Type=viewmodels:FuncEditViewModel}"
+             Margin="5">
+
+    <GroupBox Header="功能：編輯">
+        <ScrollViewer>
+            <AdornerDecorator>
+                <Grid>
+                    <Grid.Resources>
+                        <Style BasedOn="{StaticResource Style.StackPanel.MaterialDesignItem}" TargetType="StackPanel">
+                            <Setter Property="Grid.Column" Value="1"/>
+                        </Style>
+                    </Grid.Resources>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <StackPanel Grid.Column="1">
+                        <ComboBox 
+                            materialDesign:HintAssist.Hint="系統代碼"
+                            ItemsSource="{Binding SysIdList}"
+                            SelectedValuePath="SysId"
+                            SelectedValue="{Binding EditedItem.SysId, ValidatesOnDataErrors=True}"
+                            Text="{Binding EditedItem.SysId, Mode=OneWay}"
+                            TextSearch.TextPath="SysId"
+                            IsEnabled="{Binding EditMode, Converter={converters:IsInsertModeConverter}}">
+                            <!--Text="{Binding EditedItem.SysId, Mode=OneWay}" 此段是因 SysIdList 只取作用中，避免停用項 EditedItem.SysId 於元件上無法顯示-->
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <materialDesign:Chip Content="{Binding SysId}" IsEnabled="False"/>
+                                        <TextBlock Text="{Binding SysName}" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                    </StackPanel>
+                    <StackPanel Grid.Column="2">
+                        <ComboBox
+                            materialDesign:HintAssist.Hint="功能類別"
+                            ItemsSource="{Binding FuncTypeList}"
+                            DisplayMemberPath="Text"
+                            SelectedValuePath="Value"
+                            SelectedValue="{Binding EditedItem.FuncType, ValidatesOnDataErrors=True}"
+                            IsEnabled="{Binding IsFuncTypeEnabled}"
+                            Style="{StaticResource Style.ComboBox.MaterialDesignFloatingHint.Slim}">
+                            <wi:Interaction.Triggers>
+                                <wi:EventTrigger EventName="SelectionChanged">
+                                    <wi:InvokeCommandAction 
+                                        Command="{Binding SelectFuncTypeCommand}"/>
+                                </wi:EventTrigger>
+                            </wi:Interaction.Triggers>
+                        </ComboBox>
+                    </StackPanel>
+                    <StackPanel Grid.Row="1" Grid.ColumnSpan="2">
+                        <TextBox
+                            materialDesign:HintAssist.Hint="功能代碼"
+                            Text="{Binding EditedItem.FuncId, 
+                            Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,
+                            ValidatesOnDataErrors=True}"
+                            IsEnabled="{Binding EditMode, Converter={converters:IsInsertModeConverter}}">
+                            <TextBox.ToolTip>
+                                <TextBlock>
+                                    <Run Text="FuncType=Root：自定義 e.g. SysId+xxx+Root。"/>
+                                    <LineBreak/>
+                                    <Run Text="FuncType=其他：GUID。"/>
+                                </TextBlock>
+                            </TextBox.ToolTip>
+                        </TextBox>
+                    </StackPanel>
+                    <StackPanel Grid.Row="2" Grid.ColumnSpan="2">
+                        <TextBox
+                            materialDesign:HintAssist.Hint="功能名稱"
+                            Text="{Binding EditedItem.FuncName, 
+                            Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,
+                            ValidatesOnDataErrors=True}"/>
+                    </StackPanel>
+                    <StackPanel Grid.Row="3" Grid.Column="1">
+                        <TextBox
+                            materialDesign:HintAssist.Hint="視圖名稱"
+                            Text="{Binding EditedItem.ViewName, 
+                            Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,
+                            ValidatesOnDataErrors=True}">
+                            <TextBox.ToolTip>
+                                <TextBlock>
+                                    <Run Text="WpfPage：xxxPage"/>
+                                    <LineBreak/>
+                                    <Run Text="WpfWindow：xxxWindow"/>
+                                    <LineBreak/>
+                                    <Run Text="VuePage：ClinicalPatInfo"/>
+                                </TextBlock>
+                            </TextBox.ToolTip>
+                        </TextBox>
+                    </StackPanel>
+                    <StackPanel Grid.Row="3" Grid.Column="2">
+                        <TextBox
+                            materialDesign:HintAssist.Hint="視圖頁面元件"
+                            Text="{Binding EditedItem.ViewComponent, 
+                            Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,
+                            ValidatesOnDataErrors=True}">
+                            <TextBox.ToolTip>
+                                <TextBlock>
+                                    <Run Text="VuePage：../views/ClinicalPatInfo.vue"/>
+                                    <LineBreak/>
+                                    <Run Text="VuePage：../components/NotFound.vue"/>
+                                </TextBlock>
+                            </TextBox.ToolTip>
+                        </TextBox>
+                    </StackPanel>
+                    <StackPanel Grid.Row="4" Grid.ColumnSpan="2">
+                        <TextBox
+                            materialDesign:HintAssist.Hint="基礎路徑或完整路徑"
+                            Text="{Binding EditedItem.BasePath, 
+                            Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,
+                            ValidatesOnDataErrors=True}">
+                            <TextBox.ToolTip>
+                                <TextBlock>
+                                    <Run Text="Site：網址 http(s)://….."/>
+                                    <LineBreak/>
+                                    <Run Text="VersionExe：伺服器 http://tfsrepo.cych.org.tw"/>
+                                    <LineBreak/>
+                                    <Run Text="WpfPage：xxxPage"/>
+                                    <LineBreak/>
+                                    <Run Text="WpfWindow：namespace.xxxWindow"/>
+                                    <LineBreak/>
+                                    <Run Text="VuePage：/ClinicalPatInfo"/>
+                                    <LineBreak/>
+                                    <Run Text="WpfMethod：namespace.FuncListViewModel"/>
+                                </TextBlock>
+                            </TextBox.ToolTip>
+                        </TextBox>
+                    </StackPanel>
+                    <StackPanel Grid.Row="5" Grid.ColumnSpan="2">
+                        <TextBox
+                            materialDesign:HintAssist.Hint="子路徑"
+                            Text="{Binding EditedItem.SubPath, 
+                            Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,
+                            ValidatesOnDataErrors=True}">
+                            <TextBox.ToolTip>
+                                <TextBlock>
+                                    <Run Text="VersionExe：iemr2"/>
+                                    <LineBreak/>
+                                    <Run Text="WpfMethod：method name"/>
+                                </TextBlock>
+                            </TextBox.ToolTip>
+                        </TextBox>
+                    </StackPanel>
+                    <StackPanel Grid.Row="6" Grid.ColumnSpan="2">
+                        <TextBox
+                            materialDesign:HintAssist.Hint="檔名(含附檔名)"
+                            Text="{Binding EditedItem.Assembly, 
+                            Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,
+                            ValidatesOnDataErrors=True}">
+                            <TextBox.ToolTip>
+                                <TextBlock>
+                                    <Run Text="VersionExe：WpfiEMR.exe"/>
+                                    <LineBreak/>
+                                    <Run Text="WpfWindow：若為相依組件才需設定 xxx.dll"/>
+                                    <LineBreak/>
+                                    <Run Text="WpfMethod：若為相依組件才需設定 xxx.dll"/>
+                                </TextBlock>
+                            </TextBox.ToolTip>
+                        </TextBox>
+                    </StackPanel>
+                    <StackPanel Grid.Row="7" Grid.Column="1">
+                        <mah:NumericUpDown 
+                            materialDesign:HintAssist.Hint="限制執行次數"
+                            Value="{Binding EditedItem.Limit,
+                            Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                            NumericInputMode="Numbers"/>
+                    </StackPanel>
+                    <StackPanel Grid.Row="7" Grid.Column="2">
+                        <ComboBox
+                            materialDesign:HintAssist.Hint="狀態"
+                            ItemsSource="{Binding ActivateList}"
+                            DisplayMemberPath="Text"
+                            SelectedValuePath="Value"
+                            SelectedValue="{Binding EditedItem.Activate}"
+                            IsEnabled="{Binding EditMode, Converter={converters:IsUpdateModeConverter}}"
+                            Style="{StaticResource Style.ComboBox.MaterialDesignFloatingHint.Slim}"/>
+                    </StackPanel>
+                    <StackPanel Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="4" HorizontalAlignment="Center">
+                        <StackPanel.Resources>
+                            <Style BasedOn="{StaticResource Style.Button.MaterialDesignRaised.MainList}" TargetType="Button"/>
+                        </StackPanel.Resources>
+                        <Button Content="存檔" Command="{Binding OKCommand}" />
+                        <Button Content="取消" IsCancel="True" Command="{Binding CancelCommand}" />
+                    </StackPanel>
+                </Grid>
+            </AdornerDecorator>
+        </ScrollViewer>
+    </GroupBox>
+</UserControl>

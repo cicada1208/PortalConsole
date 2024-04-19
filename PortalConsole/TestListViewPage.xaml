@@ -1,0 +1,82 @@
+﻿<Page x:Class="PortalConsole.TestListViewPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:local="clr-namespace:PortalConsole"
+      xmlns:viewmodels="clr-namespace:ViewModels;assembly=ViewModels" 
+      mc:Ignorable="d" 
+      d:DesignHeight="614" d:DesignWidth="1237"
+      Title="TestListViewPage">
+
+    <Page.DataContext>
+        <viewmodels:TestListViewViewModel/>
+    </Page.DataContext>
+
+    <Grid>
+        <Grid.Resources>
+            <Style BasedOn="{StaticResource Style.StackPanel.MaterialDesignItem}" TargetType="StackPanel"/>
+        </Grid.Resources>
+        <Grid.RowDefinitions>
+            <RowDefinition Name="FilterRow" Height="Auto" />
+            <RowDefinition Height="5"/>
+            <RowDefinition Name="ListRow" Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Expander Name="FilterExpander" Header="篩選" IsExpanded="True">
+            <WrapPanel>
+                <StackPanel>
+                    <ComboBox 
+                        materialDesign:HintAssist.Hint="系統代碼"
+                        ItemsSource="{Binding SysIdList}"
+                        Text="{Binding FilteredItem.SysId, 
+                        Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        TextSearch.TextPath="SysId">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:Chip Content="{Binding SysId}" IsEnabled="False"/>
+                                    <TextBlock Text="{Binding SysName}" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                </StackPanel>
+
+                <StackPanel>
+                    <ComboBox
+                        materialDesign:HintAssist.Hint="系統類別"
+                        ItemsSource="{Binding SysTypeList}"
+                        DisplayMemberPath="Text"
+                        SelectedValuePath="Value"
+                        SelectedValue="{Binding FilteredItem.SysType}"
+                        Style="{StaticResource Style.ComboBox.MaterialDesignFloatingHint.Slim}" />
+                </StackPanel>
+
+                <CheckBox Content="選取" IsChecked="{Binding FilteredItem.Selected}" IsThreeState="True"/>
+            </WrapPanel>
+        </Expander>
+
+        <GridSplitter Grid.Row="1"/>
+
+        <!--ListView：繼承 ListBox 並且多了 View 功能-->
+        <ListView Grid.Row="2"
+            ItemsSource="{Binding SysAppList}">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="選取">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <CheckBox IsChecked="{Binding Selected}" HorizontalAlignment="Center"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="系統代碼" DisplayMemberBinding="{Binding SysId}" />
+                    <GridViewColumn Header="系統名稱" DisplayMemberBinding="{Binding SysName}" />
+                    <GridViewColumn Header="系統類別" DisplayMemberBinding="{Binding SysType}" />
+                </GridView>
+            </ListView.View>
+        </ListView>
+    </Grid>
+</Page>

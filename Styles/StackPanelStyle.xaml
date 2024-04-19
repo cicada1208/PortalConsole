@@ -1,0 +1,39 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:dp="clr-namespace:Lib.Wpf.DependencyProperties;assembly=Lib.Wpf" >
+
+    <Style 
+        x:Key = "Style.StackPanel.Item" 
+        TargetType="StackPanel">
+        <Setter Property="Orientation" Value="Horizontal" />
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Margin" Value="0,5,10,5" />
+    </Style>
+
+    <Style 
+        x:Key = "Style.StackPanel.MaterialDesignItem" 
+        TargetType="StackPanel">
+        <Setter Property="Orientation" Value="Horizontal" />
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Margin" Value="5,5,10,20" />
+    </Style>
+
+    <Style 
+        x:Key = "Style.StackPanel.ActionM" 
+        TargetType="StackPanel">
+        <Setter Property="Orientation" Value="Horizontal" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="dp:PanelDprop.Spacing" Value="45,5" />
+    </Style>
+
+    <Style 
+        x:Key = "Style.StackPanel.ActionS" 
+        TargetType="StackPanel">
+        <Setter Property="Orientation" Value="Horizontal" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="dp:PanelDprop.Spacing" Value="30,5" />
+    </Style>
+
+</ResourceDictionary>

@@ -1,0 +1,77 @@
+﻿<Page x:Class="PortalConsole.TestEventPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:local="clr-namespace:PortalConsole"
+      xmlns:models="clr-namespace:Models;assembly=Models"
+      xmlns:viewmodels="clr-namespace:ViewModels;assembly=ViewModels" 
+      xmlns:converters="clr-namespace:Lib.Wpf.ValueConverters;assembly=Lib.Wpf"
+      xmlns:params="clr-namespace:Params;assembly=Params"
+      mc:Ignorable="d" 
+      d:DesignHeight="614" d:DesignWidth="1237"
+      Name="TestEvent" Title="TestEventPage">
+
+    <Page.DataContext>
+        <viewmodels:TestEventViewModel/>
+    </Page.DataContext>
+
+    <Page.Resources>
+        <DataTemplate
+            x:Key="DTemplate.SysGroup.ListItem"
+            DataType="{x:Type models:SysGroup}">
+            <Border 
+                Style="{StaticResource Style.Border.Default}" 
+                BorderBrush="{DynamicResource PrimaryHueDarkBrush}"
+                CornerRadius="10" Margin="5,0,10,0">
+                <DockPanel>
+                    <DockPanel.Resources>
+                        <Style TargetType="{x:Type materialDesign:Chip}">
+                            <Setter Property="IsEnabled" Value="False" />
+                        </Style>
+                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MaterialDesignIconButton}"/>
+                    </DockPanel.Resources>
+                    <materialDesign:PackIcon 
+                        Kind="{Binding SysType, Converter={converters:SysTypeIconConverter}}"
+                        VerticalAlignment="Center" Margin="10,0"/>
+                    <materialDesign:Chip Content="{Binding SysName}"/>
+                    <materialDesign:Chip Name="SysIdChip" Content="{Binding SysId}"/>
+                    <materialDesign:Chip Content="{Binding Activate, Converter={converters:ActivateConverter}}"/>
+                    <Button ToolTip="修改" 
+                        Content="{materialDesign:PackIcon Kind=FileEdit}"
+                        Command="{Binding ElementName=TestEvent, Path=DataContext.ModifySysGroupCommand}"
+                        HorizontalAlignment="Left"/>
+                </DockPanel>
+            </Border>
+            <DataTemplate.Triggers>
+                <!--DataTrigger：SysType = Catalog，隱藏 SysIdChip-->
+                <DataTrigger Binding="{Binding SysType}" Value="{x:Static params:SysAppParam+SysType.Catalog}">
+                    <Setter TargetName="SysIdChip" Property="Visibility" Value="Collapsed" />
+                </DataTrigger>
+            </DataTemplate.Triggers>
+        </DataTemplate>
+    </Page.Resources>
+
+    <Grid>
+        <ScrollViewer>
+            <StackPanel>
+                <GroupBox Name="GroupBox1" Header="Routed Event">
+                    <StackPanel Name="StackPanel1" Background="LightGray">
+                        <Label Name="Label1" Content="Label" Background="LightCoral" Margin="10"/>
+                        <Button Name="Button1" Content="Button" Margin="10"/>
+                    </StackPanel>
+                </GroupBox>
+
+                <GroupBox Header="Button in ListBox">
+                    <ListBox 
+                        ItemsSource="{Binding SysGroupList}"
+                        ItemTemplate="{StaticResource DTemplate.SysGroup.ListItem}"
+                        ItemContainerStyle="{StaticResource Style.ListBoxItem.MaterialDesign.SelectedOnPreviewMouseDown}"
+                        SelectedItem="{Binding SelectedSysGroup}"
+                        HorizontalContentAlignment="Stretch"/>
+                </GroupBox>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</Page>

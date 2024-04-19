@@ -1,0 +1,532 @@
+﻿<mah:MetroWindow x:Class="PortalConsole.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        xmlns:wi="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
+        xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:materialDesignConverters="clr-namespace:MaterialDesignThemes.Wpf.Converters;assembly=MaterialDesignThemes.Wpf"
+        xmlns:dd="clr-namespace:GongSolutions.Wpf.DragDrop;assembly=GongSolutions.Wpf.DragDrop"
+        xmlns:local="clr-namespace:PortalConsole"
+        xmlns:localControls="clr-namespace:PortalConsole.Controls"
+        xmlns:viewmodels="clr-namespace:ViewModels;assembly=ViewModels"
+        xmlns:models="clr-namespace:Models;assembly=Models" 
+        xmlns:converters="clr-namespace:Lib.Wpf.ValueConverters;assembly=Lib.Wpf" 
+        xmlns:params="clr-namespace:Params;assembly=Params"
+        mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance Type=viewmodels:MainViewModel}"
+        Style="{StaticResource Style.Window.MaterialDesign}"
+        SizeToContent="WidthAndHeight" WindowStyle="None" ResizeMode="NoResize"
+        ShowCloseButton="False" AllowsTransparency="True" Background="Transparent"
+        TitleBarHeight="0" BorderThickness="0" Name="MainWin">
+
+    <Window.Title>
+        <MultiBinding  StringFormat="{}{0}-{1} 【{4}】 --Version：{2}  --程式啟動時間：{3:yyyy/MM/dd HH:mm}">
+            <Binding Source="{StaticResource CychName}"/>
+            <Binding Source="{StaticResource AppName}"/>
+            <Binding Source="{StaticResource AppVersion}"/>
+            <Binding Source="{x:Static sys:DateTime.Now}"/>
+            <Binding Source="{x:Static local:App.DBFormal}"/>
+        </MultiBinding>
+    </Window.Title>
+
+    <Window.DataContext>
+        <viewmodels:MainViewModel/>
+    </Window.DataContext>
+
+    <Window.Resources>
+        <materialDesignConverters:BooleanToVisibilityConverter 
+            x:Key="BooleanToVisibilityConverter" 
+            TrueValue="Visible" FalseValue="Collapsed" />
+
+        <materialDesignConverters:BooleanToVisibilityConverter 
+            x:Key="BooleanToVisibilityInvertedConverter" 
+            TrueValue="Collapsed" FalseValue="Visible" />
+
+        <ControlTemplate
+            x:Key="CTemplate.UserControl.UserInfo"
+            TargetType="{x:Type UserControl}">
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                <TextBlock
+                    DataContext="{Binding Path=(viewmodels:LoginViewModel.LoginUser)}"
+                    Text="{Binding Path=Name, Mode=OneWay}"
+                    Style="{StaticResource Style.TextBlock.AutoSize}" 
+                    HorizontalAlignment="Center" FontSize="17"/>
+                <materialDesign:Chip
+                    DataContext="{Binding Path=(viewmodels:LoginViewModel.LoginUser)}" 
+                    Content="{Binding Path=EmpId}"
+                    Background="{DynamicResource MaterialDesignDarkBackground}"
+                    FontSize="12" Height="26"/>
+            </StackPanel>
+        </ControlTemplate>
+
+        <ControlTemplate
+            x:Key="CTemplate.UserControl.UserInfo.Detail"
+            TargetType="{x:Type UserControl}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <Grid.Resources>
+                    <Style 
+                        BasedOn="{StaticResource MaterialDesignBody2TextBlock}"
+                        TargetType="{x:Type TextBlock}"/>
+                </Grid.Resources>
+
+                <materialDesign:PackIcon
+                    Grid.Column="0" Margin="5"
+                    Kind="ShieldAccount" 
+                    Width="20" Height="20" 
+                    VerticalAlignment="Center"/>
+                <StackPanel  Grid.Column="1" Margin="5">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <TextBlock
+                            DataContext="{Binding Path=(viewmodels:LoginViewModel.LoginUser)}"
+                            Text="{Binding Path=Name}"
+                            Style="{StaticResource MaterialDesignBody1TextBlock}" 
+                            FontWeight="Black"  FontSize="18"/>
+                        <TextBlock
+                            DataContext="{Binding Path=(viewmodels:LoginViewModel.LoginUser)}"
+                            Text="{Binding Path=PosName}"
+                            Style="{StaticResource MaterialDesignBody1TextBlock}" 
+                            FontWeight="Black"  FontSize="18"
+                            VerticalAlignment="Center"
+                            Margin="10,0"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <TextBlock DataContext="{Binding Path=(viewmodels:LoginViewModel.LoginUser)}">
+                            <Run Text="ID："/>
+                            <Run Text="{Binding Path=EmpId}"/>
+                        </TextBlock>
+                        <TextBlock 
+                            DataContext="{Binding Path=(viewmodels:LoginViewModel.LoginUser)}"
+                            Margin="10,0">
+                            <Run Text="分機："/>
+                            <Run Text="{Binding Path=Ext}"/>
+                        </TextBlock>
+                    </StackPanel>
+                </StackPanel>
+
+                <materialDesign:PackIcon
+                    Grid.Column="0" Grid.Row="1" Margin="5"
+                    Kind="Bank" 
+                    ToolTip="機構名稱"
+                    Width="20" Height="20" 
+                    VerticalAlignment="Center"/>
+                <TextBlock 
+                    Grid.Column="1" Grid.Row="1" Margin="5"
+                    DataContext="{Binding Path=(viewmodels:LoginViewModel.LoginUser)}"
+                    Text="{Binding Path=CoscName}"
+                    ToolTip="機構名稱"/>
+
+                <materialDesign:PackIcon
+                    Grid.Column="0" Grid.Row="2" Margin="5"
+                    Kind="Ip" 
+                    ToolTip="電腦 IP"
+                    Width="20" Height="20" 
+                    VerticalAlignment="Center"/>
+                <TextBlock 
+                    Grid.Column="1" Grid.Row="2" Margin="5"
+                    Text="{Binding UserIp}"
+                    ToolTip="電腦 IP"/>
+
+                <materialDesign:PackIcon
+                    Grid.Column="0" Grid.Row="3" Margin="5"
+                    Kind="DesktopClassic" 
+                    ToolTip="電腦名稱"
+                    Width="20" Height="20" 
+                    VerticalAlignment="Center"/>
+                <TextBlock 
+                    Grid.Column="1" Grid.Row="3" Margin="5"
+                    Text="{Binding UserHostName}"
+                    ToolTip="電腦名稱"/>
+            </Grid>
+        </ControlTemplate>
+
+        <HierarchicalDataTemplate 
+            x:Key="HDTemplate.Sys.TreeViewItem" 
+            DataType="{x:Type models:SysGroup}"
+            ItemsSource="{Binding Path=SysApps}">
+            <DockPanel>
+                <materialDesign:PackIcon 
+                    Name="SysTypeIcon"
+                    Kind="{Binding SysType, Converter={converters:SysTypeIconConverter}}" 
+                    VerticalAlignment="Center"/>
+                <ToggleButton Name="SysUserFavoriteButton"
+                    IsChecked="{Binding Favorite}"
+                    Command="{Binding ElementName=MainWin, Path=DataContext.AddRemoveSysUserFavoriteCommand}"
+                    CommandParameter="{Binding}"
+                    Content="{materialDesign:PackIcon Kind=StarOutline}"
+                    materialDesign:ToggleButtonAssist.OnContent="{materialDesign:PackIcon Kind=Star}"
+                    Style="{StaticResource MaterialDesignActionToggleButton}"
+                    Foreground="DarkOrange" Background="Transparent"
+                    VerticalAlignment="Center" Width="20" Height="20" Margin="5,0,0,0"/>
+                <TextBlock 
+                    Text="{Binding Path=SysName}" 
+                    Style="{StaticResource MaterialDesignSubtitle2TextBlock}" 
+                    FontWeight="Black" VerticalAlignment="Center" Margin="5,0,10,0"/>
+                <mah:ProgressRing
+                    ToolTip="Loading..."
+                    Visibility="{Binding Loading, Converter={StaticResource BooleanToVisibilityConverter}}"
+                    VerticalAlignment="Center" Width="20" Height="20"/>
+                <StackPanel DockPanel.Dock="Right" 
+                    Visibility="{Binding SysUserFavoriteId, Converter={converters:NotEmptyVisibilityConverter}}"
+                    HorizontalAlignment="Right" VerticalAlignment="Center"
+                    Margin="10,0,0,0">
+                    <materialDesign:PackIcon
+                        Kind="DragHorizontalVariant"
+                        VerticalAlignment="Center"/>
+                </StackPanel>
+            </DockPanel>
+            <HierarchicalDataTemplate.Triggers>
+                <DataTrigger Binding="{Binding SysType}" Value="{x:Static params:SysAppParam+SysType.Catalog}">
+                    <Setter TargetName="SysTypeIcon" Property="Visibility" Value="Collapsed" />
+                    <Setter TargetName="SysUserFavoriteButton" Property="Visibility" Value="Collapsed" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Favorite}" Value="False">
+                    <Setter TargetName="SysUserFavoriteButton" Property="ToolTip" Value="加入最愛" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Favorite}" Value="True">
+                    <Setter TargetName="SysUserFavoriteButton" Property="ToolTip" Value="移除最愛" />
+                </DataTrigger>
+            </HierarchicalDataTemplate.Triggers>
+        </HierarchicalDataTemplate>
+
+        <localControls:UnLockControl  x:Key="UnLockControl" Background="{DynamicResource MaterialDesignPaper}"/>
+    </Window.Resources>
+
+    <wi:Interaction.Triggers>
+        <wi:EventTrigger EventName="Closing">
+            <ei:CallMethodAction 
+                TargetObject="{Binding}"
+                MethodName="MainWindow_Closing"/>
+        </wi:EventTrigger>
+    </wi:Interaction.Triggers>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition MinWidth="0"/>
+        </Grid.ColumnDefinitions>
+
+        <materialDesign:PopupBox
+            x:Name="MainPopupBox"
+            StaysOpen="True" PopupMode="Click"
+            Margin="5" Width="85" Height="85" 
+            Style="{StaticResource Style.PopupBox.MaterialDesignMultiFloatingActionDark.NoRotate}"
+            PreviewGotKeyboardFocus="MainPopupBox_PreviewGotKeyboardFocus">
+            <!--PlacementMode="RightAndAlignBottomEdges"-->
+            <materialDesign:PopupBox.ToggleContent>
+                <Grid>
+                    <UserControl Template="{StaticResource CTemplate.UserControl.UserInfo}"/>
+                    <!--設定 Mode=TwoWay 並且取消 IsAsync=true，便可當 UserPhoto 無圖片時，使 Image 的 Width & Height 不為 0，
+                    以利 Image DragTarget 覆蓋 UserControl-->
+                    <!--<Image Name="DragTarget" Source="{Binding UserPhoto, IsAsync=true}" Stretch="UniformToFill" Margin="-1"/>-->
+                    <!--<Image Name="DragTarget" Source="{Binding UserPhoto, Mode=TwoWay}" Stretch="UniformToFill" Margin="-1"/>-->
+                    <Image Name="DragTarget" Source="{Binding UserBitmapImage, Mode=TwoWay}" Stretch="UniformToFill" Margin="-1"/>
+                </Grid>
+            </materialDesign:PopupBox.ToggleContent>
+            <!--<materialDesign:PopupBox.ToggleCheckedContent>
+                <materialDesign:PackIcon 
+                    Kind="Close" Width="30" Height="30" 
+                    HorizontalAlignment="Center" VerticalAlignment="Center" />
+            </materialDesign:PopupBox.ToggleCheckedContent>-->
+            <materialDesign:PopupBox.ToolTip>
+                <UserControl Template="{StaticResource CTemplate.UserControl.UserInfo.Detail}" />
+            </materialDesign:PopupBox.ToolTip>
+
+            <materialDesign:Card  
+                Height="{Binding ContentHeight}" MaxHeight="900"
+                Padding="5" UniformCornerRadius="6">
+                <!--Width="{Binding ContentWidth}" MaxWidth="1530" MaxHeight="1000"-->
+                <materialDesign:Card.Background>
+                    <SolidColorBrush Color="#1c313a"  Opacity="0.7"/>
+                </materialDesign:Card.Background>
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition x:Name="MenuColumn" MinWidth="280"/>
+                        <!--<ColumnDefinition Width="3"/>
+                        <ColumnDefinition Width="*"/>-->
+                    </Grid.ColumnDefinitions>
+
+                    <!--使用者資訊 & 選單-->
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <!--使用者資訊-->
+                        <materialDesign:Card Margin="5">
+                            <materialDesign:Card.Background>
+                                <SolidColorBrush Color="White"  Opacity="0.3"/>
+                            </materialDesign:Card.Background>
+
+                            <UserControl Template="{StaticResource CTemplate.UserControl.UserInfo.Detail}" />
+                        </materialDesign:Card>
+
+                        <!--選單-->
+                        <materialDesign:Card
+                            Grid.Row="1" Margin="5"
+                            Background ="{DynamicResource MaterialDesignPaper}">
+                            <materialDesign:DialogHost
+                                IsOpen="{Binding IsOpenDialog}"
+                                DialogContent="{Binding DialogContent}">
+                                <DockPanel Background ="{DynamicResource MaterialDesignPaper}">
+                                    <WrapPanel DockPanel.Dock="Bottom"
+                                        MaxWidth="{Binding ElementName=MenuColumn, Path=MinWidth}">
+                                        <WrapPanel.Resources>
+                                            <Style BasedOn="{StaticResource Style.Button.MaterialDesignRaised.Slim}" TargetType="Button">
+                                                <Setter Property="Background" Value="{DynamicResource PrimaryHueDarkBrush}"/>
+                                                <Setter Property="Margin" Value="10,5"/>
+                                                <Setter Property="Width" Value="120"/>
+                                            </Style>
+                                        </WrapPanel.Resources>
+                                        <materialDesign:ColorZone
+                                            Mode="Dark" Margin="10,5" Padding="10,0" CornerRadius="8"
+                                            materialDesign:ShadowAssist.ShadowDepth="Depth1"
+                                            Visibility="{Binding UserFavoriteTabIsSelected, Converter={StaticResource BooleanToVisibilityInvertedConverter}}">
+                                            <TextBox
+                                                Text="{Binding SearchSysFunc, 
+                                                Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                materialDesign:HintAssist.Hint="Search"
+                                                materialDesign:HintAssist.IsFloating ="False"
+                                                materialDesign:TextFieldAssist.HasLeadingIcon="True"
+                                                materialDesign:TextFieldAssist.LeadingIcon="Search"
+                                                materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
+                                                BorderThickness="0" Width="240"/>
+                                        </materialDesign:ColorZone>
+                                        <Button 
+                                            Command="{Binding MinimizeCommand}"
+                                            CommandParameter="{Binding ElementName=MainWin}">
+                                            <StackPanel Orientation="Horizontal">
+                                                <materialDesign:PackIcon Kind="CollapseAll" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                                                <TextBlock Text="最小化"/>
+                                            </StackPanel>
+                                        </Button>
+                                        <Button 
+                                            Command="{Binding LockCommand}"
+                                            Visibility="{Binding IdleLockMenuVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                            <StackPanel Orientation="Horizontal">
+                                                <materialDesign:PackIcon Kind="ShieldLock" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                                                <TextBlock Text="鎖定"/>
+                                            </StackPanel>
+                                        </Button>
+                                        <Button 
+                                            Command="{Binding UnLockCommand}"
+                                            CommandParameter="{StaticResource UnLockControl}"
+                                            Visibility="{Binding IdleLockMenuVisible, Converter={StaticResource BooleanToVisibilityInvertedConverter}}">
+                                            <StackPanel Orientation="Horizontal">
+                                                <materialDesign:PackIcon Kind="ShieldLockOpen" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                                                <TextBlock Text="解鎖"/>
+                                            </StackPanel>
+                                        </Button>
+                                        <Button Command="{Binding SwitchUserCommand}">
+                                            <StackPanel Orientation="Horizontal">
+                                                <materialDesign:PackIcon Kind="AccountSwitch" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                                                <TextBlock Text="切換"/>
+                                            </StackPanel>
+                                        </Button>
+                                        <Button Command="{Binding LogoutCommand}">
+                                            <StackPanel Orientation="Horizontal">
+                                                <materialDesign:PackIcon Kind="Logout" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                                                <TextBlock Text="登出"/>
+                                            </StackPanel>
+                                        </Button>
+                                    </WrapPanel>
+
+                                    <!--<materialDesign:PackIcon DockPanel.Dock="Top" Kind="ShieldLock"
+                                    Foreground="{DynamicResource PrimaryHueDarkBrush}"
+                                    VerticalAlignment="Center" HorizontalAlignment="Center" 
+                                    Width="100" Height="100" Margin="50,150">
+                                    <materialDesign:PackIcon.Style>
+                                        <Style TargetType="{x:Type materialDesign:PackIcon}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IdleLockMenuVisible}" Value="True">
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </materialDesign:PackIcon.Style>
+                                    </materialDesign:PackIcon>-->
+                                    <materialDesign:PackIcon DockPanel.Dock="Top" Kind="ShieldLock"
+                                    Visibility="{Binding IdleLockMenuVisible, Converter={StaticResource BooleanToVisibilityInvertedConverter}}"
+                                    Foreground="{DynamicResource PrimaryHueDarkBrush}"
+                                    VerticalAlignment="Center" HorizontalAlignment="Center" 
+                                    Width="100" Height="100" Margin="50,150"
+                                    ToolTip="請使用解鎖解除閒置鎖定"/>
+
+                                    <TabControl DockPanel.Dock="Top"
+                                        Visibility="{Binding IdleLockMenuVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                        <TabControl.Resources>
+                                            <Style TargetType="ScrollViewer" BasedOn="{StaticResource Style.ScrollViewer.MahApps.ScrollOnPreviewMouseWheel}">
+                                                <Setter Property="Padding" Value="0,0,10,0"/>
+                                            </Style>
+                                        </TabControl.Resources>
+                                        <TabItem Header="我的最愛" IsSelected="{Binding UserFavoriteTabIsSelected, Mode=TwoWay}">
+                                            <ScrollViewer>
+                                                <StackPanel>
+                                                    <Expander Style="{StaticResource MaterialDesignExpander}"
+                                                        materialDesign:ExpanderAssist.HorizontalHeaderPadding="5"
+                                                        IsExpanded="True">
+                                                        <Expander.Header>
+                                                            <materialDesign:Card 
+                                                                HorizontalContentAlignment="Stretch" 
+                                                                Padding="5" Margin="15,0,0,0">
+                                                                <TextBlock Text="系統選單" 
+                                                                    Style="{StaticResource MaterialDesignSubtitle2TextBlock}"  
+                                                                    Foreground="{DynamicResource MaterialDesignBody}" 
+                                                                    FontWeight="Bold" HorizontalAlignment="Center"/>
+                                                            </materialDesign:Card>
+                                                        </Expander.Header>
+                                                        <TreeView
+                                                            Name="SysUserFavoriteTreeView"
+                                                            ItemsSource="{Binding SysUserFavoriteList}"
+                                                            ItemTemplate="{StaticResource HDTemplate.Sys.TreeViewItem}"
+                                                            ItemContainerStyle="{StaticResource Style.TreeViewItem.MaterialDesign.Expanded}"
+                                                            IsEnabled="{Binding SysUserFavoriteLoading, Converter={converters:BooleanInvertedConverter}}"
+                                                            dd:DragDrop.IsDragSource="True"
+                                                            dd:DragDrop.IsDropTarget="True" 
+                                                            dd:DragDrop.CanDragWithMouseRightButton="True"
+                                                            dd:DragDrop.DragHandler="{Binding}"
+                                                            dd:DragDrop.DropHandler="{Binding}"
+                                                            HorizontalContentAlignment="Stretch">
+                                                            <wi:Interaction.Triggers>
+                                                                <wi:EventTrigger EventName="MouseLeftButtonUp">
+                                                                    <wi:InvokeCommandAction 
+                                                                    Command="{Binding ElementName=MainWin, Path=DataContext.SelectSysCommand}"
+                                                                    CommandParameter="{Binding SelectedItem, ElementName=SysUserFavoriteTreeView}"/>
+                                                                </wi:EventTrigger>
+                                                            </wi:Interaction.Triggers>
+                                                        </TreeView>
+                                                    </Expander>
+                                                    <Expander Style="{StaticResource MaterialDesignExpander}"
+                                                        materialDesign:ExpanderAssist.HorizontalHeaderPadding="5"
+                                                        IsExpanded="True">
+                                                        <Expander.Header>
+                                                            <materialDesign:Card 
+                                                                HorizontalContentAlignment="Stretch" 
+                                                                Padding="5" Margin="15,0,0,0">
+                                                                <TextBlock Text="功能選單" 
+                                                                    Style="{StaticResource MaterialDesignSubtitle2TextBlock}"  
+                                                                    Foreground="{DynamicResource MaterialDesignBody}" 
+                                                                    FontWeight="Bold" HorizontalAlignment="Center"/>
+                                                            </materialDesign:Card>
+                                                        </Expander.Header>
+                                                        <TreeView
+                                                            Name="FuncUserFavoriteTreeView"
+                                                            DataContext="{Binding FuncListViewModel}"
+                                                            ItemsSource="{Binding FuncUserFavoriteList}"
+                                                            ItemTemplate="{StaticResource HDTemplate.Func.TreeViewItem}"
+                                                            ItemContainerStyle="{StaticResource Style.TreeViewItem.MaterialDesign.Expanded}"
+                                                            IsEnabled="{Binding FuncUserFavoriteLoading, Converter={converters:BooleanInvertedConverter}}"
+                                                            dd:DragDrop.IsDragSource="True"
+                                                            dd:DragDrop.IsDropTarget="True" 
+                                                            dd:DragDrop.CanDragWithMouseRightButton="True"
+                                                            dd:DragDrop.DragHandler="{Binding}"
+                                                            dd:DragDrop.DropHandler="{Binding}"
+                                                            HorizontalContentAlignment="Stretch">
+                                                            <wi:Interaction.Triggers>
+                                                                <wi:EventTrigger EventName="MouseLeftButtonUp">
+                                                                    <wi:InvokeCommandAction 
+                                                                    Command="{Binding SelectFuncCommand}"
+                                                                    CommandParameter="{Binding SelectedItem, ElementName=FuncUserFavoriteTreeView}"/>
+                                                                </wi:EventTrigger>
+                                                            </wi:Interaction.Triggers>
+                                                        </TreeView>
+                                                    </Expander>
+                                                </StackPanel>
+                                            </ScrollViewer>
+                                        </TabItem>
+                                        <TabItem Header="系統選單" IsSelected="{Binding SysTabIsSelected, Mode=TwoWay}">
+                                            <ScrollViewer>
+                                                <TreeView
+                                                    Name="UserSysTreeView"
+                                                    ItemsSource="{Binding UserSysList}"
+                                                    ItemTemplate="{StaticResource HDTemplate.Sys.TreeViewItem}"
+                                                    ItemContainerStyle="{StaticResource Style.TreeViewItem.MaterialDesign.Expanded}">
+                                                    <wi:Interaction.Triggers>
+                                                        <wi:EventTrigger EventName="MouseLeftButtonUp">
+                                                            <wi:InvokeCommandAction 
+                                                            Command="{Binding ElementName=MainWin, Path=DataContext.SelectSysCommand}"
+                                                            CommandParameter="{Binding SelectedItem, ElementName=UserSysTreeView}"/>
+                                                        </wi:EventTrigger>
+                                                    </wi:Interaction.Triggers>
+                                                </TreeView>
+                                            </ScrollViewer>
+                                        </TabItem>
+                                        <TabItem Header="功能選單">
+                                            <ScrollViewer>
+                                                <TreeView
+                                                    x:Name="UserFuncTreeView"
+                                                    DataContext="{Binding FuncListViewModel}"
+                                                    ItemsSource="{Binding UserFuncList}"
+                                                    ItemTemplate="{StaticResource HDTemplate.Func.TreeViewItem}"
+                                                    ItemContainerStyle="{StaticResource Style.TreeViewItem.MaterialDesign.Expanded}">
+                                                    <wi:Interaction.Triggers>
+                                                        <wi:EventTrigger EventName="MouseLeftButtonUp">
+                                                            <wi:InvokeCommandAction 
+                                                            Command="{Binding SelectFuncCommand}"
+                                                            CommandParameter="{Binding SelectedItem, ElementName=UserFuncTreeView}"/>
+                                                        </wi:EventTrigger>
+                                                    </wi:Interaction.Triggers>
+                                                </TreeView>
+                                            </ScrollViewer>
+                                        </TabItem>
+                                    </TabControl>
+                                </DockPanel>
+                            </materialDesign:DialogHost>
+                        </materialDesign:Card>
+                    </Grid>
+
+                    <!--<GridSplitter Grid.Column="1" Margin="0,5" Background="#5f7682"/>-->
+
+                    <!--功能頁籤列表-->
+                    <!--<Grid Grid.Column="2">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <materialDesign:Card 
+                            Background ="{DynamicResource MaterialDesignPaper}"
+                            Margin="5">
+                            <TabControl
+                                x:Name="ContentTabControl"
+                                DataContext="{Binding FuncListViewModel}"
+                                ItemsSource="{Binding ContentFuncList}"
+                                SelectedItem="{Binding SelectedFunc}"
+                                ItemTemplate="{StaticResource DTemplate.Func.TabItem.Header}" 
+                                ContentTemplate="{StaticResource DTemplate.Func.TabItem.Content}"/>
+                        </materialDesign:Card>
+
+                        <materialDesign:Snackbar
+                            x:Name="PageSnackbar"
+                            MessageQueue="{materialDesign:MessageQueue}" />
+                    </Grid>-->
+                </Grid>
+            </materialDesign:Card>
+        </materialDesign:PopupBox>
+
+        <materialDesign:Snackbar
+            Grid.Column="1"
+            x:Name="MainSnackbar"
+            MessageQueue="{materialDesign:MessageQueue}"/>
+    </Grid>
+</mah:MetroWindow>

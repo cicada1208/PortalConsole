@@ -1,0 +1,140 @@
+﻿<Page x:Class="PortalConsole.TestComboBoxPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:wi="http://schemas.microsoft.com/expression/2010/interactivity"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:local="clr-namespace:PortalConsole"
+      xmlns:viewmodels="clr-namespace:ViewModels;assembly=ViewModels" 
+      xmlns:converters="clr-namespace:Lib.Wpf.ValueConverters;assembly=Lib.Wpf" 
+      xmlns:triggers="clr-namespace:Lib.Wpf.Triggers;assembly=Lib.Wpf" 
+      mc:Ignorable="d" 
+      d:DesignHeight="614" d:DesignWidth="1237"
+      Title="TestComboBoxPage">
+
+    <Page.DataContext>
+        <viewmodels:TestComboBoxViewModel/>
+    </Page.DataContext>
+    
+    <Grid>
+        <ScrollViewer>
+            <StackPanel>
+                <GroupBox Header="Setting ItemsSource">
+                    <ComboBox 
+                        materialDesign:HintAssist.Hint="系統代碼"
+                        ItemsSource="{Binding SysIdList}">
+                    </ComboBox>
+                </GroupBox>
+
+                <GroupBox Header="Setting DisplayMemberPath and SelectedItem">
+                    <StackPanel Orientation="Horizontal">
+                        <!--
+                        DisplayMemberPath：根據欄位簡單顯示。
+                        SelectedItem：Binding 選取項目。
+                        搜尋：若未設定 TextSearch.TextPath 預設搜尋 DisplayMemberPath。
+                        無論 ComboBox 可否編輯皆可搜尋。
+                        輸入若不符合 DisplayMemberPath，SelectedItem 為 null。 
+                        -->
+                        <ComboBox 
+                            materialDesign:HintAssist.Hint="系統代碼"
+                            ItemsSource="{Binding SysIdList}"
+                            DisplayMemberPath="SysName"
+                            SelectedItem="{Binding SelectedSysApp}">
+                        </ComboBox>
+                        <TextBox Text="{Binding SelectedSysApp.SysId}" IsReadOnly="True" Margin="20,0"/>
+                    </StackPanel>
+                </GroupBox>
+
+                <GroupBox Header="Setting DisplayMemberPath and SelectedValuePath">
+                    <StackPanel Orientation="Horizontal">
+                        <!--
+                        SelectedValuePath：設定 Binding SelectedValue 的欄位。
+                        搜尋：輸入若不符合 DisplayMemberPath，SelectedValue 為 null。
+                        -->
+                        <ComboBox 
+                            materialDesign:HintAssist.Hint="系統代碼"
+                            ItemsSource="{Binding SysIdList}"
+                            DisplayMemberPath="SysName"
+                            SelectedValuePath="SysId"
+                            SelectedValue="{Binding SelectedSysId}">
+                        </ComboBox>
+                        <TextBox Text="{Binding SelectedSysId}" IsReadOnly="True" Margin="20,0"/>
+                    </StackPanel>
+                </GroupBox>
+
+                <GroupBox Header="Setting Text, TextSearch.TextPath and TextChanged Event">
+                    <StackPanel Orientation="Horizontal">
+                        <!--
+                        TextSearch.TextPath：設定搜尋欄位。
+                        Text：編輯時 SelectedSysId2 即為輸入內容，即使項目不符合。
+                        -->
+                        <ComboBox 
+                            materialDesign:HintAssist.Hint="系統代碼"
+                            ItemsSource="{Binding SysIdList}"
+                            DisplayMemberPath="SysName"
+                            TextSearch.TextPath="SysId"
+                            Text="{Binding SelectedSysId2, 
+                            Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                            <wi:Interaction.Triggers>
+                                <triggers:RoutedEventTrigger RoutedEvent="TextBoxBase.TextChanged">
+                                    <wi:InvokeCommandAction 
+                                        Command="{Binding FilterSysIdCommand}"/>
+                                </triggers:RoutedEventTrigger>
+                            </wi:Interaction.Triggers>
+                        </ComboBox>
+                        <TextBox Text="{Binding SelectedSysId2}" IsReadOnly="True" Margin="20,0"/>
+                        <ComboBox 
+                            materialDesign:HintAssist.Hint="視圖名稱"
+                            ItemsSource="{Binding ViewNameList}"
+                            TextSearch.TextPath="ViewName"
+                            Text="{Binding SelectedViewName2,
+                            Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <materialDesign:Chip Content="{Binding ViewName}" IsEnabled="False"/>
+                                        <materialDesign:Chip Content="{Binding Activate, Converter={converters:ActivateConverter}}" IsEnabled="False"/>
+                                        <TextBlock Text="{Binding FuncName}" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                    </StackPanel>
+                </GroupBox>
+
+                <GroupBox Header="Setting ItemTemplate and SelectionChanged Event">
+                    <!--
+                    ItemTemplate：根據 DataType 複雜顯示可做排版。
+                    搜尋：輸入若不符合 TextSearch.TextPath，SelectedValue 為 null。
+                    -->
+                    <StackPanel Orientation="Horizontal">
+                        <ComboBox 
+                            materialDesign:HintAssist.Hint="系統代碼"
+                            ItemsSource="{Binding SysIdList}"
+                            TextSearch.TextPath="SysName"
+                            SelectedValuePath="SysId"
+                            SelectedValue="{Binding SelectedSysId3}">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <materialDesign:Chip Content="{Binding SysId}" IsEnabled="False"/>
+                                        <materialDesign:Chip Content="{Binding Activate, Converter={converters:ActivateConverter}}" IsEnabled="False"/>
+                                        <TextBlock Text="{Binding SysName}" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                            <wi:Interaction.Triggers>
+                                <wi:EventTrigger EventName="SelectionChanged">
+                                    <wi:InvokeCommandAction 
+                                        Command="{Binding SelectionChangedCommand}"/>
+                                </wi:EventTrigger>
+                            </wi:Interaction.Triggers>
+                        </ComboBox>
+                        <TextBox Text="{Binding SelectedSysId3}" IsReadOnly="True" Margin="20,0"/>
+                    </StackPanel>
+                </GroupBox>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</Page>

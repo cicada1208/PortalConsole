@@ -1,0 +1,73 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!--Template: 改變控制項既有外觀屬性，還允許額外定義客製化屬性-->
+
+    <!--驗證錯誤訊息顯示樣版: 外框加粗紅色-->
+    <ControlTemplate 
+        x:Key="CTemplate.ValidationError.Base">
+        <!--Placeholder for the TextBox itself-->
+        <Border BorderThickness="5" BorderBrush="Red">
+            <AdornedElementPlaceholder />
+        </Border>
+    </ControlTemplate>
+
+    <!--驗證錯誤訊息顯示樣版: 顯示於下方-->
+    <ControlTemplate 
+        x:Key="CTemplate.ValidationError.Below">
+        <StackPanel>
+            <AdornedElementPlaceholder x:Name="placeholder" />
+            <TextBlock 
+                Text="{Binding ElementName=placeholder, 
+                Path=AdornedElement.(Validation.Errors)[0].ErrorContent}"
+                FontSize="11" FontStyle="Italic" Foreground="Red" />
+        </StackPanel>
+    </ControlTemplate>
+
+    <!--驗證錯誤訊息顯示樣版: 顯示於右方-->
+    <ControlTemplate 
+        x:Key="CTemplate.ValidationError.Right">
+        <DockPanel LastChildFill="true">
+            <Border 
+                ToolTip="{Binding ElementName=placeholder, 
+                Path=AdornedElement.(Validation.Errors)[0].ErrorContent}"
+                DockPanel.Dock="right" Background="Red" Margin="3,0,0,0" 
+                Width="20" Height="20" CornerRadius="10">
+                <TextBlock Text="!" 
+                    VerticalAlignment="center" HorizontalAlignment="center" 
+                    FontWeight="Bold" Foreground="white"/>
+            </Border>
+            <AdornedElementPlaceholder Name="placeholder" VerticalAlignment="Center">
+                <Border BorderBrush="Red" BorderThickness="1" />
+            </AdornedElementPlaceholder>
+        </DockPanel>
+    </ControlTemplate>
+
+    <!--驗證錯誤訊息顯示樣版: 顯示於右方彈出-->
+    <ControlTemplate 
+        x:Key="CTemplate.ValidationError.Popup">
+        <Grid>
+            <Border x:Name="errorBorder" 
+                BorderBrush="#FFCB2E2E" BorderThickness="1" 
+                Background="#11FF0000" IsHitTestVisible="False"/>
+            <AdornedElementPlaceholder x:Name="placeholder" />
+            <Popup 
+                IsOpen="{Binding ElementName=placeholder, 
+                Path=AdornedElement.IsFocused, Mode=OneWay}"
+                Placement="Right" PopupAnimation="Fade" AllowsTransparency="True" 
+                HorizontalAlignment="Right" HorizontalOffset="0" VerticalOffset="0">
+                <StackPanel Orientation="Horizontal">
+                    <Polygon VerticalAlignment="Center" Points="0,4 4,0 4,8" 
+                        Fill="#FFCB2E2E" Stretch="Fill" Stroke="#FFCB2E2E" StrokeThickness="2" />
+                    <Border Background="#FFCB2E2E" CornerRadius="4" Padding="4">
+                        <TextBlock Text="{Binding ElementName=placeholder, 
+                            Path=AdornedElement.ToolTip, Mode=OneWay}" 
+                            HorizontalAlignment="Center" Foreground="White" 
+                            FontWeight="Bold" Margin="2,0,0,0"/>
+                    </Border>
+                </StackPanel>
+            </Popup>
+        </Grid>
+    </ControlTemplate>
+
+</ResourceDictionary>

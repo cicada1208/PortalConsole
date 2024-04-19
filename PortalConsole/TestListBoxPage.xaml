@@ -1,0 +1,229 @@
+﻿<Page x:Class="PortalConsole.TestListBoxPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:local="clr-namespace:PortalConsole"
+      xmlns:models="clr-namespace:Models;assembly=Models"
+      xmlns:viewmodels="clr-namespace:ViewModels;assembly=ViewModels" 
+      xmlns:converters="clr-namespace:Lib.Wpf.ValueConverters;assembly=Lib.Wpf"
+      xmlns:params="clr-namespace:Params;assembly=Params"
+      mc:Ignorable="d" 
+      d:DesignHeight="614" d:DesignWidth="1237"
+      Title="TestListBoxPage">
+
+    <Page.DataContext>
+        <viewmodels:TestListBoxViewModel/>
+    </Page.DataContext>
+
+    <Page.Resources>
+        <ControlTemplate 
+            x:Key="CTemplate.ItemsControl"
+            TargetType="ItemsControl">
+            <materialDesign:Card UniformCornerRadius="10" Padding="10" Margin="10">
+                <!--ItemsPresenter：資料集合顯示的地方-->
+                <ItemsPresenter/>
+            </materialDesign:Card>
+        </ControlTemplate>
+
+        <DataTemplate
+            x:Key="DTemplate.SysGroup.ListItem"
+            DataType="{x:Type models:SysGroup}">
+            <Border 
+                Style="{StaticResource Style.Border.Default}" 
+                BorderBrush="{DynamicResource PrimaryHueDarkBrush}"
+                CornerRadius="10" Margin="5,0,10,0">
+                <DockPanel>
+                    <DockPanel.Resources>
+                        <Style TargetType="{x:Type materialDesign:Chip}">
+                            <Setter Property="IsEnabled" Value="False" />
+                        </Style>
+                    </DockPanel.Resources>
+                    <materialDesign:PackIcon 
+                        Kind="{Binding SysType, Converter={converters:SysTypeIconConverter}}"
+                        VerticalAlignment="Center" Margin="10,0"/>
+                    <materialDesign:Chip Content="{Binding SysName}"/>
+                    <materialDesign:Chip Name="SysIdChip" Content="{Binding SysId}"/>
+                    <materialDesign:Chip Content="{Binding Activate, Converter={converters:ActivateConverter}}"/>
+                    <StackPanel DockPanel.Dock="Right" 
+                        HorizontalAlignment="Right" VerticalAlignment="Center"
+                        Margin="10,0">
+                        <materialDesign:PackIcon
+                            Kind="DragHorizontalVariant"
+                            VerticalAlignment="Center"/>
+                    </StackPanel>
+                </DockPanel>
+            </Border>
+            <DataTemplate.Triggers>
+                <!--DataTrigger：SysType = Catalog，隱藏 SysIdChip-->
+                <DataTrigger Binding="{Binding SysType}" Value="{x:Static params:SysAppParam+SysType.Catalog}">
+                    <Setter TargetName="SysIdChip" Property="Visibility" Value="Collapsed" />
+                </DataTrigger>
+            </DataTemplate.Triggers>
+        </DataTemplate>
+
+        <Style 
+            x:Key="Style.SysGroupList.SysTypeGroup" 
+            TargetType="{x:Type GroupItem}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Expander IsExpanded="True">
+                            <Expander.Header>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="SysType：" FontWeight="Bold" Foreground="White" />
+                                    <!--Name：Name 為固定字眼，分組的值，
+                                    即 ViewModel PropertyGroupDescription 設定的 SysType-->
+                                    <TextBlock Text="{Binding Name}" FontWeight="Bold" Foreground="White" />
+                                </StackPanel>
+                            </Expander.Header>
+                            <!--ItemsPresenter：資料集合顯示的地方-->
+                            <ItemsPresenter />
+                        </Expander>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Page.Resources>
+
+    <Grid>
+        <ScrollViewer>
+            <StackPanel>
+                <GroupBox Header="ItemsControl：setting ItemsSource">
+                    <!--ItemsSource：Binding 資料集合-->
+                    <ItemsControl ItemsSource="{Binding SysGroupList}"/>
+                </GroupBox>
+                
+                <GroupBox Header="ItemsControl：setting Template">
+                    <!--Template：設定 ItemsControl 外觀顯示-->
+                    <ItemsControl 
+                        ItemsSource="{Binding SysGroupList}"
+                        Template="{StaticResource CTemplate.ItemsControl}"/>
+                </GroupBox>
+
+                <GroupBox Header="ItemsControl：setting ItemTemplate and ItemContainerStyle">
+                    <!--ItemTemplate：設定 Item DataTemplate，
+                    DataTemplate 根據 DataType 設計外觀顯示-->
+                    <ItemsControl 
+                        ItemsSource="{Binding SysGroupList}"
+                        Template="{StaticResource CTemplate.ItemsControl}"
+                        ItemTemplate="{StaticResource DTemplate.SysGroup.ListItem}">
+                        <!--ItemContainerStyle：設定套用至 ContentPresenter 的樣式-->
+                        <ItemsControl.ItemContainerStyle>
+                            <Style TargetType="ContentPresenter">
+                                <Setter Property="Control.Margin" Value="10"/>
+                            </Style>
+                        </ItemsControl.ItemContainerStyle>
+                    </ItemsControl>
+                </GroupBox>
+
+                <GroupBox Header="ItemsControl：setting ItemsPanel">
+                    <ItemsControl 
+                        ItemsSource="{Binding SysGroupList}"
+                        Template="{StaticResource CTemplate.ItemsControl}"
+                        ItemTemplate="{StaticResource DTemplate.SysGroup.ListItem}"
+                        Width="700">
+                        <ItemsControl.ItemContainerStyle>
+                            <Style TargetType="ContentPresenter">
+                                <Setter Property="Control.Margin" Value="10"/>
+                            </Style>
+                        </ItemsControl.ItemContainerStyle>
+
+                        <!--ItemsPanel：設定資料集合容器，可做排版之用-->
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                    </ItemsControl>
+                </GroupBox>
+
+                <GroupBox Header="ListBox：inherit from ItemsControl">
+                    <!--ListBox：繼承 ItemsControl 並且多了選取功能-->
+                    <ListBox 
+                        ItemsSource="{Binding SysGroupList}"
+                        Template="{StaticResource CTemplate.ItemsControl}"
+                        ItemTemplate="{StaticResource DTemplate.SysGroup.ListItem}"
+                        SelectionMode="Multiple"
+                        mah:MultiSelectorHelper.SelectedItems="{Binding SelectedSysGroupList}"
+                        HorizontalContentAlignment="Stretch" />
+                </GroupBox>
+
+                <GroupBox Header="ListBox：setting GroupStyle">
+                    <ListBox 
+                        ItemsSource="{Binding SysGroupList}"
+                        Template="{StaticResource CTemplate.ItemsControl}"
+                        ItemTemplate="{StaticResource DTemplate.SysGroup.ListItem}"
+                        SelectedItem="{Binding SelectedSysGroup}"
+                        HorizontalContentAlignment="Stretch">
+                        <!--GroupStyle：設定群組外觀顯示-->
+                        <ListBox.GroupStyle>
+                            <!--ContainerStyle：設定 GroupItem 樣式-->
+                            <GroupStyle ContainerStyle="{StaticResource Style.SysGroupList.SysTypeGroup}" >
+                                <!--GroupStyle.Panel：設定群組容器，可做排版之用-->
+                                <!--<GroupStyle.Panel>
+                                    <ItemsPanelTemplate>
+                                        <StackPanel Orientation="Horizontal"/>
+                                    </ItemsPanelTemplate>
+                                </GroupStyle.Panel>-->
+                            </GroupStyle>
+                        </ListBox.GroupStyle>
+                    </ListBox>
+                </GroupBox>
+
+                <GroupBox Header="ListBox：Single Choice">
+                    <StackPanel>
+                        <StackPanel Style="{StaticResource Style.StackPanel.MaterialDesignItem}">
+                            <materialDesign:Card Padding="5">
+                                <ListBox
+                                    x:Name="RadioGroup1"
+                                    ItemsSource="{Binding RecStList}"
+                                    SelectedValuePath="Value"
+                                    SelectedValue="{Binding SelectedRecSt, ValidatesOnDataErrors=True}"
+                                    Style="{StaticResource Style.ListBox.Single.MaterialDesignRadioGroup}"
+                                    MaxWidth="300">
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Text}" TextWrapping="Wrap"/>
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                </ListBox>
+                            </materialDesign:Card>
+                            <TextBox Text="{Binding SelectedRecSt}" IsReadOnly="True" Margin="20,0"/>
+                        </StackPanel>
+
+                        <StackPanel Style="{StaticResource Style.StackPanel.MaterialDesignItem}">
+                            <!--
+                            擇一設定：
+                            DisplayMemberPath：根據欄位簡單顯示。
+                            ItemTemplate：根據 DataType 複雜顯示可做排版。
+                            -->
+                            <ListBox
+                                x:Name="RadioGroup2"
+                                ItemsSource="{Binding RecStList}"
+                                DisplayMemberPath="Text"
+                                SelectedValuePath="Value"
+                                SelectedValue="{Binding SelectedRecSt2}"
+                                Style="{StaticResource Style.ListBox.Single.MaterialDesignRadioGroup.Vertical}">
+                            </ListBox>
+                            <TextBox Text="{Binding SelectedRecSt2}" IsReadOnly="True" Margin="20,0"/>
+                        </StackPanel>
+                    </StackPanel>
+                </GroupBox>
+
+                <GroupBox Header="ListBox：Multiple Choice">
+                    <StackPanel Style="{StaticResource Style.StackPanel.MaterialDesignItem}">
+                        <ListBox
+                            ItemsSource="{Binding RecStList}"
+                            DisplayMemberPath="Text"
+                            mah:MultiSelectorHelper.SelectedItems="{Binding SelectedRecStList, ValidatesOnDataErrors=True}"
+                            Style="{StaticResource Style.ListBox.Multi.MaterialDesignCheckGroup}">
+                        </ListBox>
+                    </StackPanel>
+                </GroupBox>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</Page>

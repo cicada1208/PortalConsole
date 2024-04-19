@@ -1,0 +1,110 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+                    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
+
+    <ResourceDictionary.MergedDictionaries>
+        <!--MahApps.Metro resource dictionaries.-->
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Themes/Light.Steel.xaml" />
+
+        <!--Material Design resource dictionaries.-->
+        <!--This is the current way to setup your app's initial theme-->
+        <materialDesign:BundledTheme BaseTheme="Light" PrimaryColor="BlueGrey" SecondaryColor="DeepOrange" ColorAdjustment="{materialDesign:ColorAdjustment}" />
+        <!--You can also use the built in theme dictionaries as well-->
+        <!--<ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.BlueGrey.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.DeepOrange.xaml" />-->
+        <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
+        <!--Material Design: MahApps Compatibility-->
+        <!--<ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.MahApps;component/Themes/MaterialDesignTheme.MahApps.Defaults.xaml"/>-->
+        <ResourceDictionary Source="/Styles;component/MaterialDesignTheme.MahApps.Defaults.xaml" />
+
+        <!--Cych resource dictionaries.-->
+        <!--Absolute pack URI-->
+        <!--<ResourceDictionary Source="pack://application:,,,/Styles;component/ValidationErrorStyle.xaml" />-->
+        <!--Relative pack URI-->
+        <!--Control-->
+        <ResourceDictionary Source="/Styles;component/ValidationErrorStyle.xaml" />
+        <ResourceDictionary Source="/Styles;component/WindowStyle.xaml" />
+        <ResourceDictionary Source="/Styles;component/LabelStyle.xaml" />
+        <ResourceDictionary Source="/Styles;component/TextBlockStyle.xaml" />
+        <ResourceDictionary Source="/Styles;component/TextBoxStyle.xaml" />
+        <ResourceDictionary Source="/Styles;component/PasswordBoxStyle.xaml" />
+        <ResourceDictionary Source="/Styles;component/NumericUpDownStyle.xaml" />
+        <ResourceDictionary Source="/Styles;component/ComboBoxStyle.xaml" />
+        <ResourceDictionary Source="/Styles;component/DatePickerStyle.xaml" />
+        <ResourceDictionary Source="/Styles;component/TimePickerStyle.xaml" />
+        <ResourceDictionary Source="/Styles;component/DateTimePickerStyle.xaml" />
+        <ResourceDictionary Source="/Styles;component/ButtonStyle.xaml" />
+        <ResourceDictionary Source="/Styles;component/ToggleButtonStyle.xaml" />
+        <ResourceDictionary Source="/Styles;component/RadioButtonStyle.xaml" />
+        <ResourceDictionary Source="/Styles;component/CheckBoxStyle.xaml" />
+        <ResourceDictionary Source="/Styles;component/ListBoxStyle.xaml" />
+        <ResourceDictionary Source="/Styles;component/ListBoxItemStyle.xaml" />
+        <ResourceDictionary Source="/Styles;component/ListViewStyle.xaml" />
+        <ResourceDictionary Source="/Styles;component/DataGridStyle.xaml" />
+        <ResourceDictionary Source="/Styles;component/TabControlStyle.xaml" />
+        <ResourceDictionary Source="/Styles;component/TreeViewStyle.xaml" />
+        <ResourceDictionary Source="/Styles;component/TreeViewItemStyle.xaml" />
+        <ResourceDictionary Source="/Styles;component/MenuStyle.xaml" />
+        <ResourceDictionary Source="/Styles;component/ToolTipStyle.xaml" />
+        <ResourceDictionary Source="/Styles;component/SnackbarStyle.xaml" />
+        <ResourceDictionary Source="/Styles;component/PopupBoxStyle.xaml" />
+        <ResourceDictionary Source="/Styles;component/StackPanelStyle.xaml" />
+        <ResourceDictionary Source="/Styles;component/CardStyle.xaml" />
+        <ResourceDictionary Source="/Styles;component/ScrollViewerStyle.xaml" />
+        <ResourceDictionary Source="/Styles;component/BorderStyle.xaml" />
+        <!--Model-->
+        <ResourceDictionary Source="/Styles;component/FuncStyle.xaml" />
+        <!--Font-->
+        <ResourceDictionary Source="/Styles;component/Fonts.xaml" />
+        <!--Color-->
+        <ResourceDictionary Source="/Styles;component/Colors.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <!--Default style-->
+    <!--TextBlock：MahApps.Metro 設定預設樣式會影響其他元件-->
+    <!--Border：MahApps.Metro 設定預設樣式會影響其他元件-->
+    <!--<Style BasedOn="{StaticResource Style.Label.AutoSize}" TargetType="Label" />
+    <Style BasedOn="{StaticResource Style.TextBox.AutoSize}" TargetType="TextBox" />
+    <Style BasedOn="{StaticResource Style.PasswordBox.AutoSize}" TargetType="PasswordBox" />
+    <Style BasedOn="{StaticResource Style.ComboBox.AutoSize}" TargetType="ComboBox" />
+    <Style BasedOn="{StaticResource Style.DatePicker.AutoSize}" TargetType="DatePicker" />
+    <Style BasedOn="{StaticResource Style.DateTimePicker.AutoSize}" TargetType="{x:Type mah:DateTimePicker}" />
+    <Style BasedOn="{StaticResource Style.Button.AutoSize}" TargetType="Button" />
+    <Style BasedOn="{StaticResource Style.ToggleButton.AutoSize}" TargetType="ToggleButton" />
+    <Style BasedOn="{StaticResource Style.RadioButton.Default}" TargetType="RadioButton" />
+    <Style BasedOn="{StaticResource Style.DataGrid.AutoSize}" TargetType="DataGrid" />
+    <Style BasedOn="{StaticResource Style.TabControl.AutoSize}" TargetType="TabControl" />
+    <Style BasedOn="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" TargetType="Separator" />-->
+
+    <Style BasedOn="{StaticResource Style.Label.AutoSize}" TargetType="Label" />
+    <Style BasedOn="{StaticResource Style.TextBox.MaterialDesignFloatingHint.Slim}" TargetType="TextBox" />
+    <Style BasedOn="{StaticResource Style.PasswordBox.MaterialDesignFloatingHint.Slim}" TargetType="PasswordBox" />
+    <Style BasedOn="{StaticResource Style.NumericUpDown.MaterialDesignFloatingHint.Slim}" TargetType="{x:Type mah:NumericUpDown}" />
+    <Style BasedOn="{StaticResource Style.ComboBox.MaterialDesignFloatingHint.Editable}" TargetType="ComboBox" />
+    <Style BasedOn="{StaticResource Style.DatePicker.MaterialDesignFloatingHint.Slim}" TargetType="DatePicker" />
+    <Style BasedOn="{StaticResource Style.TimePicker.MaterialDesignFloatingHint.Slim}" TargetType="{x:Type materialDesign:TimePicker}" />
+    <Style BasedOn="{StaticResource Style.DateTimePicker.Slim}" TargetType="{x:Type mah:DateTimePicker}" />
+    <Style BasedOn="{StaticResource Style.Button.MaterialDesignRaised.Slim}" TargetType="Button" />
+    <Style BasedOn="{StaticResource Style.ToggleButton.Slim}" TargetType="ToggleButton" />
+    <Style BasedOn="{StaticResource Style.RadioButton.MaterialDesign}" TargetType="RadioButton" />
+    <Style BasedOn="{StaticResource Style.CheckBox.MaterialDesign}" TargetType="CheckBox" />
+    <Style BasedOn="{StaticResource Style.ListView.MaterialDesign}" TargetType="ListView" />
+    <Style BasedOn="{StaticResource Style.DataGrid.MaterialDesign.AutoSize}" TargetType="DataGrid" />
+    <Style BasedOn="{StaticResource Style.TabControl.AutoSize}" TargetType="{x:Type TabControl}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.TabItem}" TargetType="{x:Type TabItem}" />
+    <Style BasedOn="{StaticResource Style.TreeView.MaterialDesign.Virtualized}" TargetType="{x:Type TreeView}" />
+    <Style BasedOn="{StaticResource Style.Menu.MaterialDesign}" TargetType="{x:Type Menu}" />
+    <Style BasedOn="{StaticResource Style.ToolTip.MaterialDesign}" TargetType="{x:Type ToolTip}" />
+    <Style BasedOn="{StaticResource MaterialDesignEmbeddedDialogHost}" TargetType="{x:Type materialDesign:DialogHost}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.GroupBox}" TargetType="{x:Type GroupBox}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.Expander}" TargetType="{x:Type Expander}" />
+    <Style BasedOn="{StaticResource Style.ScrollViewer.MahApps}" TargetType="{x:Type ScrollViewer}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.ScrollBar}" TargetType="{x:Type ScrollBar}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.GridSplitter}" TargetType="{x:Type GridSplitter}" />
+    <Style BasedOn="{StaticResource MaterialDesignSeparator}" TargetType="{x:Type Separator}" />
+
+</ResourceDictionary>

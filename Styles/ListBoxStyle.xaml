@@ -1,0 +1,659 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.ValidationErrorTemplate.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.ListBox.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.Scrollbars.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <!--#region Multi Choice-->
+
+    <Style 
+        x:Key="Style.ListBoxItem.MaterialDesignFilterChip" 
+        TargetType="{x:Type ListBoxItem}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                    <CheckBox 
+                        Style="{StaticResource MaterialDesignFilterChipCheckBox}" 
+                        IsChecked="{Binding IsSelected, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay}"
+                        Content="{TemplateBinding Content}"
+                        ContentTemplate="{TemplateBinding ContentTemplate}"
+                        ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                        ContentStringFormat="{TemplateBinding ContentTemplateSelector}"
+                        FontFamily="{TemplateBinding FontFamily}"
+                        FontSize="{TemplateBinding FontSize}"
+                        FontStretch="{TemplateBinding FontStretch}"
+                        FontStyle="{TemplateBinding FontStyle}"
+                        FontWeight="{TemplateBinding FontWeight}"
+                        MinHeight="32" Height="auto"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style 
+        x:Key="Style.ListBox.Multi.MaterialDesignFilterChip" 
+        BasedOn="{StaticResource MaterialDesignFilterChipListBox}"
+        TargetType="{x:Type ListBox}">
+        <Style.Resources>
+            <Style BasedOn="{StaticResource MahApps.Styles.ScrollViewer}" TargetType="ScrollViewer" />
+        </Style.Resources>
+        <Setter Property="FontFamily" Value="{DynamicResource MaterialDesignFont}" />
+        <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Content}" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Validation.ErrorTemplate" Value="{StaticResource MaterialDesignValidationErrorTemplate}" />
+        <Setter Property="materialDesign:ValidationAssist.FontSize" Value="{DynamicResource MahApps.Font.Size.Content}" />
+        <Setter Property="materialDesign:ValidationAssist.OnlyShowOnFocus" Value="True" />
+        <Setter Property="materialDesign:ValidationAssist.UsePopup" Value="True" />
+        <Setter Property="ItemContainerStyle" Value="{StaticResource Style.ListBoxItem.MaterialDesignFilterChip}"/>
+        <Style.Triggers>
+            <Trigger Property="Validation.HasError" Value="true">
+                <Setter Property="BorderBrush" Value="{DynamicResource MaterialDesignValidationErrorBrush}" />
+                <Setter Property="BorderThickness" Value="1" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style 
+        x:Key="Style.ListBox.Multi.MaterialDesignFilterChip.Vertical" 
+        BasedOn="{StaticResource Style.ListBox.Multi.MaterialDesignFilterChip}"
+        TargetType="{x:Type ListBox}">
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <VirtualizingStackPanel IsVirtualizing="True" VirtualizationMode="Recycling" Orientation="Vertical"/>
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style 
+        x:Key="Style.ListBoxItem.MaterialDesignFilterChip.Primary" 
+        TargetType="{x:Type ListBoxItem}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                    <CheckBox 
+                        Style="{StaticResource MaterialDesignFilterChipPrimaryCheckBox}" 
+                        IsChecked="{Binding IsSelected, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay}"
+                        Content="{TemplateBinding Content}"
+                        ContentTemplate="{TemplateBinding ContentTemplate}"
+                        ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                        ContentStringFormat="{TemplateBinding ContentTemplateSelector}"
+                        FontFamily="{TemplateBinding FontFamily}"
+                        FontSize="{TemplateBinding FontSize}"
+                        FontStretch="{TemplateBinding FontStretch}"
+                        FontStyle="{TemplateBinding FontStyle}"
+                        FontWeight="{TemplateBinding FontWeight}"
+                        MinHeight="32" Height="auto"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style 
+        x:Key="Style.ListBox.Multi.MaterialDesignFilterChip.Primary" 
+        BasedOn="{StaticResource Style.ListBox.Multi.MaterialDesignFilterChip}"
+        TargetType="{x:Type ListBox}">
+        <Setter Property="ItemContainerStyle" Value="{StaticResource Style.ListBoxItem.MaterialDesignFilterChip.Primary}"/>
+    </Style>
+
+    <Style 
+        x:Key="Style.ListBox.Multi.MaterialDesignFilterChip.Primary.Vertical" 
+        BasedOn="{StaticResource Style.ListBox.Multi.MaterialDesignFilterChip.Primary}"
+        TargetType="{x:Type ListBox}">
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <VirtualizingStackPanel IsVirtualizing="True" VirtualizationMode="Recycling" Orientation="Vertical" />
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style 
+        x:Key="Style.ListBoxItem.MaterialDesignFilterChip.Accent" 
+        TargetType="{x:Type ListBoxItem}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                    <CheckBox 
+                        Style="{StaticResource MaterialDesignFilterChipAccentCheckBox}" 
+                        IsChecked="{Binding IsSelected, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay}"
+                        Content="{TemplateBinding Content}"
+                        ContentTemplate="{TemplateBinding ContentTemplate}"
+                        ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                        ContentStringFormat="{TemplateBinding ContentTemplateSelector}"
+                        FontFamily="{TemplateBinding FontFamily}"
+                        FontSize="{TemplateBinding FontSize}"
+                        FontStretch="{TemplateBinding FontStretch}"
+                        FontStyle="{TemplateBinding FontStyle}"
+                        FontWeight="{TemplateBinding FontWeight}"
+                        MinHeight="32" Height="auto"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style 
+        x:Key="Style.ListBox.Multi.MaterialDesignFilterChip.Accent" 
+        BasedOn="{StaticResource Style.ListBox.Multi.MaterialDesignFilterChip}"
+        TargetType="{x:Type ListBox}">
+        <Setter Property="ItemContainerStyle" Value="{StaticResource Style.ListBoxItem.MaterialDesignFilterChip.Accent}"/>
+    </Style>
+
+    <Style 
+        x:Key="Style.ListBox.Multi.MaterialDesignFilterChip.Accent.Vertical" 
+        BasedOn="{StaticResource Style.ListBox.Multi.MaterialDesignFilterChip.Accent}"
+        TargetType="{x:Type ListBox}">
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <VirtualizingStackPanel IsVirtualizing="True" VirtualizationMode="Recycling" Orientation="Vertical" />
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style 
+        x:Key="Style.ListBoxItem.MaterialDesignFilterChip.Outline" 
+        TargetType="{x:Type ListBoxItem}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                    <CheckBox 
+                        Style="{StaticResource MaterialDesignFilterChipOutlineCheckBox}" 
+                        IsChecked="{Binding IsSelected, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay}"
+                        Content="{TemplateBinding Content}"
+                        ContentTemplate="{TemplateBinding ContentTemplate}"
+                        ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                        ContentStringFormat="{TemplateBinding ContentTemplateSelector}"
+                        FontFamily="{TemplateBinding FontFamily}"
+                        FontSize="{TemplateBinding FontSize}"
+                        FontStretch="{TemplateBinding FontStretch}"
+                        FontStyle="{TemplateBinding FontStyle}"
+                        FontWeight="{TemplateBinding FontWeight}"
+                        MinHeight="32" Height="auto"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style 
+        x:Key="Style.ListBox.Multi.MaterialDesignFilterChip.Outline" 
+        BasedOn="{StaticResource Style.ListBox.Multi.MaterialDesignFilterChip}"
+        TargetType="{x:Type ListBox}">
+        <Setter Property="ItemContainerStyle" Value="{StaticResource Style.ListBoxItem.MaterialDesignFilterChip.Outline}"/>
+    </Style>
+
+    <Style 
+        x:Key="Style.ListBox.Multi.MaterialDesignFilterChip.Outline.Vertical" 
+        BasedOn="{StaticResource Style.ListBox.Multi.MaterialDesignFilterChip.Outline}"
+        TargetType="{x:Type ListBox}">
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <VirtualizingStackPanel IsVirtualizing="True" VirtualizationMode="Recycling" Orientation="Vertical" />
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style 
+        x:Key="Style.ListBoxItem.MaterialDesignFilterChip.Outline.Primary" 
+        TargetType="{x:Type ListBoxItem}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                    <CheckBox 
+                        Style="{StaticResource MaterialDesignFilterChipPrimaryOutlineCheckBox}" 
+                        IsChecked="{Binding IsSelected, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay}"
+                        Content="{TemplateBinding Content}"
+                        ContentTemplate="{TemplateBinding ContentTemplate}"
+                        ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                        ContentStringFormat="{TemplateBinding ContentTemplateSelector}"
+                        FontFamily="{TemplateBinding FontFamily}"
+                        FontSize="{TemplateBinding FontSize}"
+                        FontStretch="{TemplateBinding FontStretch}"
+                        FontStyle="{TemplateBinding FontStyle}"
+                        FontWeight="{TemplateBinding FontWeight}"
+                        MinHeight="32" Height="auto"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style 
+        x:Key="Style.ListBox.Multi.MaterialDesignFilterChip.Outline.Primary" 
+        BasedOn="{StaticResource Style.ListBox.Multi.MaterialDesignFilterChip}"
+        TargetType="{x:Type ListBox}">
+        <Setter Property="ItemContainerStyle" Value="{StaticResource Style.ListBoxItem.MaterialDesignFilterChip.Outline.Primary}"/>
+    </Style>
+
+    <Style 
+        x:Key="Style.ListBox.Multi.MaterialDesignFilterChip.Outline.Primary.Vertical" 
+        BasedOn="{StaticResource Style.ListBox.Multi.MaterialDesignFilterChip.Outline.Primary}"
+        TargetType="{x:Type ListBox}">
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <VirtualizingStackPanel IsVirtualizing="True" VirtualizationMode="Recycling" Orientation="Vertical" />
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style 
+        x:Key="Style.ListBoxItem.MaterialDesignFilterChip.Outline.Accent" 
+        TargetType="{x:Type ListBoxItem}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                    <CheckBox 
+                        Style="{StaticResource MaterialDesignFilterChipAccentOutlineCheckBox}" 
+                        IsChecked="{Binding IsSelected, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay}"
+                        Content="{TemplateBinding Content}"
+                        ContentTemplate="{TemplateBinding ContentTemplate}"
+                        ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                        ContentStringFormat="{TemplateBinding ContentTemplateSelector}"
+                        FontFamily="{TemplateBinding FontFamily}"
+                        FontSize="{TemplateBinding FontSize}"
+                        FontStretch="{TemplateBinding FontStretch}"
+                        FontStyle="{TemplateBinding FontStyle}"
+                        FontWeight="{TemplateBinding FontWeight}"
+                        MinHeight="32" Height="auto"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style 
+        x:Key="Style.ListBox.Multi.MaterialDesignFilterChip.Outline.Accent" 
+        BasedOn="{StaticResource Style.ListBox.Multi.MaterialDesignFilterChip}"
+        TargetType="{x:Type ListBox}">
+        <Setter Property="ItemContainerStyle" Value="{StaticResource Style.ListBoxItem.MaterialDesignFilterChip.Outline.Accent}"/>
+    </Style>
+
+    <Style 
+        x:Key="Style.ListBox.Multi.MaterialDesignFilterChip.Outline.Accent.Vertical" 
+        BasedOn="{StaticResource Style.ListBox.Multi.MaterialDesignFilterChip.Outline.Accent}"
+        TargetType="{x:Type ListBox}">
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <VirtualizingStackPanel IsVirtualizing="True" VirtualizationMode="Recycling" Orientation="Vertical" />
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style 
+        x:Key="Style.ListBoxItem.MaterialDesignCheckBox" 
+        TargetType="{x:Type ListBoxItem}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                    <CheckBox 
+                        Style="{StaticResource MaterialDesignCheckBox}" 
+                        IsChecked="{Binding IsSelected, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay}"
+                        Content="{TemplateBinding Content}"
+                        ContentTemplate="{TemplateBinding ContentTemplate}"
+                        ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                        ContentStringFormat="{TemplateBinding ContentTemplateSelector}"
+                        FontFamily="{TemplateBinding FontFamily}"
+                        FontSize="{TemplateBinding FontSize}"
+                        FontStretch="{TemplateBinding FontStretch}"
+                        FontStyle="{TemplateBinding FontStyle}"
+                        FontWeight="{TemplateBinding FontWeight}"
+                        Margin="0,0,10,0"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style 
+        x:Key="Style.ListBox.Multi.MaterialDesignCheckGroup" 
+        BasedOn="{StaticResource Style.ListBox.Multi.MaterialDesignFilterChip}"
+        TargetType="{x:Type ListBox}">
+        <Setter Property="ItemContainerStyle" Value="{StaticResource Style.ListBoxItem.MaterialDesignCheckBox}"/>
+    </Style>
+
+    <Style 
+        x:Key="Style.ListBox.Multi.MaterialDesignCheckGroup.Vertical" 
+        BasedOn="{StaticResource Style.ListBox.Multi.MaterialDesignCheckGroup}"
+        TargetType="{x:Type ListBox}">
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <VirtualizingStackPanel IsVirtualizing="True" VirtualizationMode="Recycling" Orientation="Vertical" />
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--#endregion-->
+
+    <!--#region Single Choice-->
+
+    <Style 
+        x:Key="Style.ListBoxItem.MaterialDesignChoiceChip" 
+        TargetType="{x:Type ListBoxItem}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                    <RadioButton 
+                        Style="{StaticResource MaterialDesignChoiceChipRadioButton}" 
+                        IsChecked="{Binding IsSelected, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay}"
+                        Content="{TemplateBinding Content}"
+                        ContentTemplate="{TemplateBinding ContentTemplate}"
+                        ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                        ContentStringFormat="{TemplateBinding ContentTemplateSelector}"
+                        FontFamily="{TemplateBinding FontFamily}"
+                        FontSize="{TemplateBinding FontSize}"
+                        FontStretch="{TemplateBinding FontStretch}"
+                        FontStyle="{TemplateBinding FontStyle}"
+                        FontWeight="{TemplateBinding FontWeight}"
+                        GroupName="{Binding Name, RelativeSource={RelativeSource AncestorType={x:Type ListBox}}}"
+                        MinHeight="32" Height="auto"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style 
+        x:Key="Style.ListBox.Single.MaterialDesignChoiceChip" 
+        BasedOn="{StaticResource Style.ListBox.Multi.MaterialDesignFilterChip}"
+        TargetType="{x:Type ListBox}">
+        <Setter Property="SelectionMode" Value="Single"/>
+        <Setter Property="ItemContainerStyle" Value="{StaticResource Style.ListBoxItem.MaterialDesignChoiceChip}"/>
+    </Style>
+
+    <Style 
+        x:Key="Style.ListBox.Single.MaterialDesignChoiceChip.Vertical" 
+        BasedOn="{StaticResource Style.ListBox.Single.MaterialDesignChoiceChip}"
+        TargetType="{x:Type ListBox}">
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <VirtualizingStackPanel IsVirtualizing="True" VirtualizationMode="Recycling" Orientation="Vertical" />
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style 
+        x:Key="Style.ListBoxItem.MaterialDesignChoiceChip.Primary" 
+        TargetType="{x:Type ListBoxItem}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                    <RadioButton 
+                        Style="{StaticResource MaterialDesignChoiceChipPrimaryRadioButton}" 
+                        IsChecked="{Binding IsSelected, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay}"
+                        Content="{TemplateBinding Content}"
+                        ContentTemplate="{TemplateBinding ContentTemplate}"
+                        ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                        ContentStringFormat="{TemplateBinding ContentTemplateSelector}"
+                        FontFamily="{TemplateBinding FontFamily}"
+                        FontSize="{TemplateBinding FontSize}"
+                        FontStretch="{TemplateBinding FontStretch}"
+                        FontStyle="{TemplateBinding FontStyle}"
+                        FontWeight="{TemplateBinding FontWeight}"
+                        GroupName="{Binding Name, RelativeSource={RelativeSource AncestorType={x:Type ListBox}}}"
+                        MinHeight="32" Height="auto"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style 
+        x:Key="Style.ListBox.Single.MaterialDesignChoiceChip.Primary" 
+        BasedOn="{StaticResource Style.ListBox.Single.MaterialDesignChoiceChip}"
+        TargetType="{x:Type ListBox}">
+        <Setter Property="ItemContainerStyle" Value="{StaticResource Style.ListBoxItem.MaterialDesignChoiceChip.Primary}"/>
+    </Style>
+
+    <Style 
+        x:Key="Style.ListBox.Single.MaterialDesignChoiceChip.Primary.Vertical" 
+        BasedOn="{StaticResource Style.ListBox.Single.MaterialDesignChoiceChip.Primary}"
+        TargetType="{x:Type ListBox}">
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <VirtualizingStackPanel IsVirtualizing="True" VirtualizationMode="Recycling" Orientation="Vertical" />
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style 
+        x:Key="Style.ListBoxItem.MaterialDesignChoiceChip.Accent" 
+        TargetType="{x:Type ListBoxItem}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                    <RadioButton 
+                        Style="{StaticResource MaterialDesignChoiceChipAccentRadioButton}" 
+                        IsChecked="{Binding IsSelected, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay}"
+                        Content="{TemplateBinding Content}"
+                        ContentTemplate="{TemplateBinding ContentTemplate}"
+                        ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                        ContentStringFormat="{TemplateBinding ContentTemplateSelector}"
+                        FontFamily="{TemplateBinding FontFamily}"
+                        FontSize="{TemplateBinding FontSize}"
+                        FontStretch="{TemplateBinding FontStretch}"
+                        FontStyle="{TemplateBinding FontStyle}"
+                        FontWeight="{TemplateBinding FontWeight}"
+                        GroupName="{Binding Name, RelativeSource={RelativeSource AncestorType={x:Type ListBox}}}"
+                        MinHeight="32" Height="auto"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style 
+        x:Key="Style.ListBox.Single.MaterialDesignChoiceChip.Accent" 
+        BasedOn="{StaticResource Style.ListBox.Single.MaterialDesignChoiceChip}"
+        TargetType="{x:Type ListBox}">
+        <Setter Property="ItemContainerStyle" Value="{StaticResource Style.ListBoxItem.MaterialDesignChoiceChip.Accent}"/>
+    </Style>
+
+    <Style 
+        x:Key="Style.ListBox.Single.MaterialDesignChoiceChip.Accent.Vertical" 
+        BasedOn="{StaticResource Style.ListBox.Single.MaterialDesignChoiceChip.Accent}"
+        TargetType="{x:Type ListBox}">
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <VirtualizingStackPanel IsVirtualizing="True" VirtualizationMode="Recycling" Orientation="Vertical" />
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style 
+        x:Key="Style.ListBoxItem.MaterialDesignChoiceChip.Outline" 
+        TargetType="{x:Type ListBoxItem}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                    <RadioButton 
+                        Style="{StaticResource MaterialDesignChoiceChipOutlineRadioButton}" 
+                        IsChecked="{Binding IsSelected, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay}"
+                        Content="{TemplateBinding Content}"
+                        ContentTemplate="{TemplateBinding ContentTemplate}"
+                        ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                        ContentStringFormat="{TemplateBinding ContentTemplateSelector}"
+                        FontFamily="{TemplateBinding FontFamily}"
+                        FontSize="{TemplateBinding FontSize}"
+                        FontStretch="{TemplateBinding FontStretch}"
+                        FontStyle="{TemplateBinding FontStyle}"
+                        FontWeight="{TemplateBinding FontWeight}"
+                        GroupName="{Binding Name, RelativeSource={RelativeSource AncestorType={x:Type ListBox}}}"
+                        MinHeight="32" Height="auto"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style 
+        x:Key="Style.ListBox.Single.MaterialDesignChoiceChip.Outline" 
+        BasedOn="{StaticResource Style.ListBox.Single.MaterialDesignChoiceChip}"
+        TargetType="{x:Type ListBox}">
+        <Setter Property="ItemContainerStyle" Value="{StaticResource Style.ListBoxItem.MaterialDesignChoiceChip.Outline}"/>
+    </Style>
+
+    <Style 
+        x:Key="Style.ListBox.Single.MaterialDesignChoiceChip.Outline.Vertical" 
+        BasedOn="{StaticResource Style.ListBox.Single.MaterialDesignChoiceChip.Outline}"
+        TargetType="{x:Type ListBox}">
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <VirtualizingStackPanel IsVirtualizing="True" VirtualizationMode="Recycling" Orientation="Vertical" />
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style 
+        x:Key="Style.ListBoxItem.MaterialDesignChoiceChip.Outline.Primary" 
+        TargetType="{x:Type ListBoxItem}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                    <RadioButton 
+                        Style="{StaticResource MaterialDesignChoiceChipPrimaryOutlineRadioButton}" 
+                        IsChecked="{Binding IsSelected, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay}"
+                        Content="{TemplateBinding Content}"
+                        ContentTemplate="{TemplateBinding ContentTemplate}"
+                        ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                        ContentStringFormat="{TemplateBinding ContentTemplateSelector}"
+                        FontFamily="{TemplateBinding FontFamily}"
+                        FontSize="{TemplateBinding FontSize}"
+                        FontStretch="{TemplateBinding FontStretch}"
+                        FontStyle="{TemplateBinding FontStyle}"
+                        FontWeight="{TemplateBinding FontWeight}"
+                        GroupName="{Binding Name, RelativeSource={RelativeSource AncestorType={x:Type ListBox}}}"
+                        MinHeight="32" Height="auto"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style 
+        x:Key="Style.ListBox.Single.MaterialDesignChoiceChip.Outline.Primary" 
+        BasedOn="{StaticResource Style.ListBox.Single.MaterialDesignChoiceChip}"
+        TargetType="{x:Type ListBox}">
+        <Setter Property="ItemContainerStyle" Value="{StaticResource Style.ListBoxItem.MaterialDesignChoiceChip.Outline.Primary}"/>
+    </Style>
+
+    <Style 
+        x:Key="Style.ListBox.Single.MaterialDesignChoiceChip.Outline.Primary.Vertical" 
+        BasedOn="{StaticResource Style.ListBox.Single.MaterialDesignChoiceChip.Outline.Primary}"
+        TargetType="{x:Type ListBox}">
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <VirtualizingStackPanel IsVirtualizing="True" VirtualizationMode="Recycling" Orientation="Vertical" />
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style 
+        x:Key="Style.ListBoxItem.MaterialDesignChoiceChip.Outline.Accent" 
+        TargetType="{x:Type ListBoxItem}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                    <RadioButton 
+                        Style="{StaticResource MaterialDesignChoiceChipAccentOutlineRadioButton}" 
+                        IsChecked="{Binding IsSelected, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay}"
+                        Content="{TemplateBinding Content}"
+                        ContentTemplate="{TemplateBinding ContentTemplate}"
+                        ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                        ContentStringFormat="{TemplateBinding ContentTemplateSelector}"
+                        FontFamily="{TemplateBinding FontFamily}"
+                        FontSize="{TemplateBinding FontSize}"
+                        FontStretch="{TemplateBinding FontStretch}"
+                        FontStyle="{TemplateBinding FontStyle}"
+                        FontWeight="{TemplateBinding FontWeight}"
+                        GroupName="{Binding Name, RelativeSource={RelativeSource AncestorType={x:Type ListBox}}}"
+                        MinHeight="32" Height="auto"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style 
+        x:Key="Style.ListBox.Single.MaterialDesignChoiceChip.Outline.Accent"
+        BasedOn="{StaticResource Style.ListBox.Single.MaterialDesignChoiceChip}"
+        TargetType="{x:Type ListBox}" >
+        <Setter Property="ItemContainerStyle" Value="{StaticResource Style.ListBoxItem.MaterialDesignChoiceChip.Outline.Accent}"/>
+    </Style>
+
+    <Style 
+        x:Key="Style.ListBox.Single.MaterialDesignChoiceChip.Outline.Accent.Vertical"
+        BasedOn="{StaticResource Style.ListBox.Single.MaterialDesignChoiceChip.Outline.Accent}"
+        TargetType="{x:Type ListBox}" >
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <VirtualizingStackPanel IsVirtualizing="True" VirtualizationMode="Recycling" Orientation="Vertical" />
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style 
+        x:Key="Style.ListBoxItem.MaterialDesignRadioButton" 
+        TargetType="{x:Type ListBoxItem}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                    <RadioButton 
+                        Style="{StaticResource MaterialDesignRadioButton}" 
+                        IsChecked="{Binding IsSelected, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay}"
+                        Content="{TemplateBinding Content}"
+                        ContentTemplate="{TemplateBinding ContentTemplate}"
+                        ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                        ContentStringFormat="{TemplateBinding ContentTemplateSelector}"
+                        FontFamily="{TemplateBinding FontFamily}"
+                        FontSize="{TemplateBinding FontSize}"
+                        FontStretch="{TemplateBinding FontStretch}"
+                        FontStyle="{TemplateBinding FontStyle}"
+                        FontWeight="{TemplateBinding FontWeight}"
+                        GroupName="{Binding Name, RelativeSource={RelativeSource AncestorType={x:Type ListBox}}}"
+                        Margin="0,0,10,0"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style 
+        x:Key="Style.ListBox.Single.MaterialDesignRadioGroup" 
+        BasedOn="{StaticResource Style.ListBox.Single.MaterialDesignChoiceChip}"
+        TargetType="{x:Type ListBox}">
+        <Setter Property="ItemContainerStyle" Value="{StaticResource Style.ListBoxItem.MaterialDesignRadioButton}"/>
+    </Style>
+
+    <Style 
+        x:Key="Style.ListBox.Single.MaterialDesignRadioGroup.Vertical" 
+        BasedOn="{StaticResource Style.ListBox.Single.MaterialDesignRadioGroup}"
+        TargetType="{x:Type ListBox}">
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <VirtualizingStackPanel IsVirtualizing="True" VirtualizationMode="Recycling" Orientation="Vertical" />
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--#endregion-->
+
+</ResourceDictionary>

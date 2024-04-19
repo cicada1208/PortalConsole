@@ -1,0 +1,38 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+    <!--MahApps.Metro: overwrite-->
+    <FontFamily x:Key="MahApps.Fonts.Family.SymbolTheme">Segoe MDL2 Assets,/MahApps.Metro;component/Assets/#Segoe MDL2 Assets</FontFamily>
+    <FontFamily x:Key="MahApps.Fonts.Family.Button">Microsoft JhengHei, Segoe UI, Lucida Sans Unicode, Verdana, /Resources;component/Font/#EUDC</FontFamily>
+    <FontFamily x:Key="MahApps.Fonts.Family.Header">Microsoft JhengHei, Segoe UI Light, Lucida Sans Unicode, Verdana, /Resources;component/Font/#EUDC</FontFamily>
+    <FontFamily x:Key="MahApps.Fonts.Family.Window.Title">Microsoft JhengHei, Segoe UI Light, Lucida Sans Unicode, Verdana, /Resources;component/Font/#EUDC</FontFamily>
+    <FontFamily x:Key="MahApps.Fonts.Family.Control">Microsoft JhengHei, Segoe UI, Lucida Sans Unicode, Verdana, /Resources;component/Font/#EUDC</FontFamily>
+    <FontFamily x:Key="MahApps.Fonts.Family.ToggleSwitch">Microsoft JhengHei, Segoe UI, Lucida Sans Unicode, Verdana, /Resources;component/Font/#EUDC</FontFamily>
+    <FontFamily x:Key="MahApps.Fonts.Family.ToggleSwitch.Header">Microsoft JhengHei, Segoe UI, Lucida Sans Unicode, Verdana, /Resources;component/Font/#EUDC</FontFamily>
+    <sys:Double x:Key="MahApps.Font.Size.Header">14</sys:Double>
+    <sys:Double x:Key="MahApps.Font.Size.SubHeader">14</sys:Double>
+    <sys:Double x:Key="MahApps.Font.Size.Window.Title">12</sys:Double>
+    <sys:Double x:Key="MahApps.Font.Size.Default">14</sys:Double>
+    <sys:Double x:Key="MahApps.Font.Size.Content">14</sys:Double>
+    <sys:Double x:Key="MahApps.Font.Size.Button.Flat">14</sys:Double>
+    <sys:Double x:Key="MahApps.Font.Size.TabItem">14</sys:Double>
+    <sys:Double x:Key="MahApps.Font.Size.Button">14</sys:Double>
+    <sys:Double x:Key="MahApps.Font.Size.FloatingWatermark">12</sys:Double>
+    <sys:Double x:Key="MahApps.Font.Size.Button.ClearText">14</sys:Double>
+    <sys:Double x:Key="MahApps.Font.Size.Tooltip">14</sys:Double>
+    <sys:Double x:Key="MahApps.Font.Size.Menu">14</sys:Double>
+    <sys:Double x:Key="MahApps.Font.Size.ContextMenu">14</sys:Double>
+    <sys:Double x:Key="MahApps.Font.Size.StatusBar">14</sys:Double>
+    <sys:Double x:Key="MahApps.Font.Size.Dialog.Title">14</sys:Double>
+    <sys:Double x:Key="MahApps.Font.Size.Dialog.Message">14</sys:Double>
+    <sys:Double x:Key="MahApps.Font.Size.Dialog.Button">14</sys:Double>
+    <sys:Double x:Key="MahApps.Font.Size.Flyout.Header">14</sys:Double>
+    <sys:Double x:Key="MahApps.Font.Size.ToggleSwitch">14</sys:Double>
+    <sys:Double x:Key="MahApps.Font.Size.ToggleSwitch.Header">14</sys:Double>
+    <sys:Double x:Key="MahApps.Font.Size.ColorPicker.TabItemHeader">14</sys:Double>
+
+    <!--Material Design: overwrite-->
+    <FontFamily x:Key="MaterialDesignFont">Microsoft JhengHei, Segoe UI, Lucida Sans Unicode, Verdana, /Resources;component/Font/#EUDC</FontFamily>
+
+</ResourceDictionary>

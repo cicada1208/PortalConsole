@@ -1,0 +1,68 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+                    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+                    xmlns:converters="clr-namespace:MaterialDesignThemes.Wpf.Converters;assembly=MaterialDesignThemes.Wpf">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.TextBlock.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+    
+    <converters:NullableToVisibilityConverter x:Key="NullableToVisibilityConverter" />
+    <converters:SnackbarActionButtonPlacementModeConverter x:Key="SnackbarActionButtonPlacementModeConverter" />
+
+    <Style TargetType="materialDesign:SnackbarMessage">
+        <Setter Property="HorizontalContentAlignment" Value="Left" />
+        <Setter Property="Margin" Value="16" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="materialDesign:SnackbarMessage">
+                    <DockPanel>
+                        <!-- will become a Panel to wrap a "pretend" button -->
+                        <Button x:Name="PART_ActionButton"
+                                Command="{TemplateBinding ActionCommand}"
+                                CommandParameter="{TemplateBinding ActionCommandParameter}"
+                                Content="{TemplateBinding ActionContent}"
+                                ContentTemplate="{TemplateBinding ActionContentTemplate}"
+                                ContentStringFormat="{TemplateBinding ActionContentStringFormat}"
+                                ContentTemplateSelector="{TemplateBinding ActionContentTemplateSelector}"
+                                HorizontalAlignment="Right"
+                                Panel.ZIndex="1"
+                                Visibility="{TemplateBinding ActionContent, Converter={StaticResource NullableToVisibilityConverter}}"
+                                Style="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type materialDesign:Snackbar}}, Path=ActionButtonStyle}">
+                            <DockPanel.Dock>
+                                <MultiBinding Converter="{StaticResource SnackbarActionButtonPlacementModeConverter}">
+                                    <Binding RelativeSource="{RelativeSource AncestorType={x:Type materialDesign:Snackbar}}" Path="ActionButtonPlacement" />
+                                    <Binding RelativeSource="{RelativeSource AncestorType={x:Type materialDesign:Snackbar}}" Path="(materialDesign:SnackbarMessage.InlineActionButtonMaxHeight)" />
+                                    <Binding RelativeSource="{RelativeSource AncestorType={x:Type materialDesign:Snackbar}}" Path="ActualHeight" />
+                                </MultiBinding>
+                            </DockPanel.Dock>
+                        </Button>
+
+                        <ContentPresenter Content="{TemplateBinding Content}"
+                                          ContentTemplate="{TemplateBinding ContentTemplate}"
+                                          ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                          ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          MaxHeight="500">
+                            <ContentPresenter.Resources>
+                                <DataTemplate DataType="{x:Type sys:String}">
+                                    <TextBlock Text="{Binding}" Padding="0">
+                                        <TextBlock.Style>
+                                            <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource MaterialDesignBody1TextBlock}">
+                                                <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Content}" />
+                                                <Setter Property="TextWrapping" Value="Wrap" />
+                                                <Setter Property="TextTrimming" Value="None" />
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                </DataTemplate>
+                            </ContentPresenter.Resources>
+                        </ContentPresenter>
+                    </DockPanel>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
+</ResourceDictionary>

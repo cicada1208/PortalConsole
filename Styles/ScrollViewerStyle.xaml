@@ -1,0 +1,26 @@
+﻿<ResourceDictionary 
+    x:Class="Styles.ScrollViewerStyle"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.Scrollbars.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <Style 
+        x:Key="Style.ScrollViewer.MahApps" 
+        BasedOn="{StaticResource MahApps.Styles.ScrollViewer}"
+        TargetType="{x:Type ScrollViewer}">
+        <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
+        <Setter Property="HorizontalScrollBarVisibility" Value="Auto" />
+        <Setter Property="PanningMode" Value="Both" />
+    </Style>
+
+    <Style 
+        x:Key="Style.ScrollViewer.MahApps.ScrollOnPreviewMouseWheel" 
+        BasedOn="{StaticResource Style.ScrollViewer.MahApps}"
+        TargetType="{x:Type ScrollViewer}">
+        <EventSetter Event="PreviewMouseWheel" Handler="ScrollViewerOnPreviewMouseWheel"/>
+    </Style>
+
+</ResourceDictionary>

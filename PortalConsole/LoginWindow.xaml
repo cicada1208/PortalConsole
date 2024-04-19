@@ -1,0 +1,119 @@
+﻿<mah:MetroWindow x:Class="PortalConsole.LoginWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:wi="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
+        xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:local="clr-namespace:PortalConsole"
+        xmlns:viewmodels="clr-namespace:ViewModels;assembly=ViewModels"
+        mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance Type=viewmodels:LoginViewModel}"
+        Style="{StaticResource Style.Window.MaterialDesign}"
+        WindowStartupLocation="CenterScreen" ResizeMode="NoResize"
+        Height="400" Width="570">
+
+    <Window.Title>
+        <MultiBinding  StringFormat="{}{0}-{1} 【{3}】 --Version：{2}">
+            <Binding Source="{StaticResource CychName}"/>
+            <Binding Source="{StaticResource AppName}"/>
+            <Binding Source="{StaticResource AppVersion}"/>
+            <Binding Source="{x:Static local:App.DBFormal}"/>
+        </MultiBinding>
+    </Window.Title>
+
+    <Window.DataContext>
+        <viewmodels:LoginViewModel/>
+    </Window.DataContext>
+
+    <Window.Resources>
+        <Style BasedOn="{StaticResource Style.Button.MaterialDesignRaised.MainList}" TargetType="Button"/>
+        <Style BasedOn="{StaticResource Style.TextBox.MaterialDesignFloatingHint.Slim.Alphanum}" TargetType="TextBox"/>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Image Source="/Resources;component/Pic/Cych.jpg"/>
+        <TextBlock 
+            Grid.Row="1" Padding="5" HorizontalAlignment="Right" Visibility="Hidden"
+            Style="{StaticResource Style.TextBlock.AutoSize}">
+            <TextBlock.Text>
+                <MultiBinding  StringFormat="{}{0}  {2}--Version：{1}">
+                    <Binding Source="{StaticResource AppName}"/>
+                    <Binding Source="{StaticResource AppVersion}"/>
+                    <Binding Source="{x:Static local:App.DBFormal}"/>
+                </MultiBinding>
+            </TextBlock.Text>
+            <TextBlock.Background>
+                <ImageBrush ImageSource="/Resources;component/Pic/Background.jpg"/>
+            </TextBlock.Background>
+        </TextBlock>
+        <Border 
+            Grid.Row="2" Margin="20"
+            Style="{StaticResource Style.Border.Default}">
+            <Grid>
+                <Grid.Resources>
+                    <Style BasedOn="{StaticResource Style.StackPanel.MaterialDesignItem}" TargetType="StackPanel">
+                        <Setter Property="HorizontalAlignment" Value="Center"/>
+                    </Style>
+                </Grid.Resources>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+                <StackPanel>
+                    <materialDesign:PackIcon 
+                        Kind="Account" Width="35" Height="28" VerticalAlignment="Bottom" 
+                        Foreground="{DynamicResource MaterialDesignBodyLight}"/>
+                    <TextBox
+                        x:Name="UserIdTextBox" 
+                        materialDesign:HintAssist.Hint="使用者帳號"
+                        Text="{Binding UserId, 
+                        Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,
+                        ValidatesOnDataErrors=True}">
+                        <wi:Interaction.Triggers>
+                            <wi:EventTrigger EventName="KeyDown">
+                                <ei:CallMethodAction 
+                                    TargetObject="{Binding}"
+                                    MethodName="TextBox_KeyDown"/>
+                            </wi:EventTrigger>
+                        </wi:Interaction.Triggers>
+                    </TextBox>
+                </StackPanel>
+                <StackPanel Grid.Row="1">
+                    <materialDesign:PackIcon 
+                        Kind="Password" Width="35" Height="28" VerticalAlignment="Bottom" 
+                        Foreground="{DynamicResource MaterialDesignBodyLight}"/>
+                    <PasswordBox
+                        x:Name="UserPasswordBox"
+                        materialDesign:HintAssist.Hint="使用者密碼">
+                        <wi:Interaction.Triggers>
+                            <wi:EventTrigger EventName="KeyDown">
+                                <ei:CallMethodAction 
+                                    TargetObject="{Binding}"
+                                    MethodName="TextBox_KeyDown"/>
+                            </wi:EventTrigger>
+                        </wi:Interaction.Triggers>
+                    </PasswordBox>
+                </StackPanel>
+            </Grid>
+        </Border>
+        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center">
+            <Button
+                x:Name="OKButton" Content="確認" 
+                Command="{Binding LoginCommand}"
+                CommandParameter="{Binding ElementName=UserPasswordBox}"/>
+            <Button
+                x:Name="CancelButton" Content="取消" 
+                Click="CancelButton_Click" IsCancel="True"/>
+        </StackPanel>
+    </Grid>
+
+</mah:MetroWindow>

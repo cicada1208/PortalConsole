@@ -1,0 +1,131 @@
+﻿<Page x:Class="PortalConsole.RolePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:wi="http://schemas.microsoft.com/expression/2010/interactivity"
+      xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:materialDesignConverters="clr-namespace:MaterialDesignThemes.Wpf.Converters;assembly=MaterialDesignThemes.Wpf"
+      xmlns:local="clr-namespace:PortalConsole"
+      xmlns:localControls="clr-namespace:PortalConsole.Controls"
+      xmlns:controls="clr-namespace:Controls;assembly=Controls" 
+      xmlns:viewmodels="clr-namespace:ViewModels;assembly=ViewModels"
+      xmlns:triggers="clr-namespace:Lib.Wpf.Triggers;assembly=Lib.Wpf" 
+      xmlns:extensions="clr-namespace:Lib.Wpf.MarkupExtensions;assembly=Lib.Wpf"
+      xmlns:converters="clr-namespace:Lib.Wpf.ValueConverters;assembly=Lib.Wpf" 
+      mc:Ignorable="d" 
+      d:DataContext="{d:DesignInstance Type=viewmodels:RoleViewModel}"
+      d:DesignHeight="614" d:DesignWidth="1237"
+      Title="RolePage">
+
+    <Page.DataContext>
+        <viewmodels:RoleViewModel ViewName="{extensions:NameOf Type={x:Type local:RolePage}}"/>
+    </Page.DataContext>
+
+    <Page.Resources>
+        <materialDesignConverters:BooleanToVisibilityConverter 
+            x:Key="BooleanToVisibilityConverter" 
+            TrueValue="Visible" FalseValue="Collapsed" />
+
+        <Style BasedOn="{StaticResource Style.StackPanel.MaterialDesignItem}" TargetType="StackPanel"/>
+
+        <localControls:RoleEditControl  x:Key="RoleEditControl"/>
+    </Page.Resources>
+
+    <materialDesign:DialogHost
+        IsOpen="{Binding IsOpenDialog}"
+        DialogContent="{Binding DialogContent}">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Name="ButtonRow" Height="Auto"/>
+                <RowDefinition Height="5"/>
+                <RowDefinition Name="FilterRow" Height="Auto"/>
+                <RowDefinition Height="5"/>
+                <RowDefinition Name="ListRow" Height="*"/>
+            </Grid.RowDefinitions>
+
+            <ScrollViewer>
+                <WrapPanel>
+                    <WrapPanel.Resources>
+                        <Style BasedOn="{StaticResource Style.Button.MaterialDesignRaised.MainList}" TargetType="Button"/>
+                    </WrapPanel.Resources>
+                    <Button Name="QueryButton" Content="查詢"
+                        Command="{Binding QueryCommand}"/>
+                    <Button Name="InsertButton" Content="新增"
+                        Command="{Binding InsertCommand}"
+                        CommandParameter="{StaticResource RoleEditControl}"/>
+                    <Button Name="ExportButton" Content="匯出"
+                        Command="{Binding ExportCommand}"
+                        CommandParameter="{Binding ElementName=ListDataGrid}"/>
+                </WrapPanel>
+            </ScrollViewer>
+
+            <GridSplitter Grid.Row="1"/>
+
+            <Expander Name="FilterExpander" Header="篩選"  Grid.Row="2" IsExpanded="True"
+                Expanded="FilterExpander_Expanded" Collapsed="FilterExpander_Collapsed">
+                <WrapPanel>
+                    <StackPanel>
+                        <ComboBox
+                        materialDesign:HintAssist.Hint="狀態"
+                        ItemsSource="{Binding ActivateList}"
+                        DisplayMemberPath="Text"
+                        SelectedValuePath="Value"
+                        SelectedValue="{Binding FilteredItem.Activate}"
+                        Style="{StaticResource Style.ComboBox.MaterialDesignFloatingHint.Slim}" />
+                    </StackPanel>
+                </WrapPanel>
+            </Expander>
+
+            <GridSplitter Grid.Row="3"/>
+
+            <DataGrid
+            Name="ListDataGrid" Grid.Row="4"
+            ItemsSource="{Binding DataList}"
+            SelectedItem="{Binding SelectedItem}">
+                <DataGrid.Columns>
+                    <DataGridTemplateColumn Header="編輯">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button 
+                                    Content="{materialDesign:PackIcon Kind=Edit}" 
+                                    Command="{Binding DataContext.EditCommand, ElementName=ListDataGrid}"
+                                    CommandParameter="{StaticResource RoleEditControl}"
+                                    Style="{StaticResource Style.Button.MaterialDesign.DataGridAction}">
+                                </Button>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTextColumn 
+                        Header="角色群組代碼"
+                        Binding="{Binding RoleId}">
+                    </DataGridTextColumn>
+                    <DataGridTextColumn 
+                        Header="角色群組名稱"
+                        Binding="{Binding RoleName}">
+                    </DataGridTextColumn>
+                    <DataGridTextColumn 
+                        Header="描述"
+                        Binding="{Binding Description}"/>
+                    <controls:DataGridComboBoxColumnBindingDataContext 
+                        Header="狀態"
+                        ItemsSource="{Binding Path=DataContext.ActivateList, 
+                        RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Page}}}"
+                        DisplayMemberPath="Text"
+                        SelectedValuePath="Value"
+                        SelectedValueBinding="{Binding Activate}"/>
+                    <DataGridTextColumn 
+                        Header="修改者"
+                        Binding="{Binding MUserId}"/>
+                    <DataGridTextColumn 
+                        Header="修改日期"
+                        Binding="{Binding MDateTime}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+            <mah:ProgressRing 
+                Grid.Row="4" IsLarge="True" ToolTip="Loading..."
+                Visibility="{Binding ProgressShow, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+        </Grid>
+    </materialDesign:DialogHost>
+</Page>

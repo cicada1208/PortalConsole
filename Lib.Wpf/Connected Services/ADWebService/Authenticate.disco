@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<discovery xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.xmlsoap.org/disco/">
+  <contractRef ref="http://webf.cych.org.tw/WebTeam/UserIdentify/Authenticate.asmx?wsdl" docRef="http://webf.cych.org.tw/WebTeam/UserIdentify/Authenticate.asmx" xmlns="http://schemas.xmlsoap.org/disco/scl/" />
+  <soap address="http://webf.cych.org.tw/WebTeam/UserIdentify/Authenticate.asmx" xmlns:q1="http://www.cych.org.tw/" binding="q1:AdUserIdentifySoap" xmlns="http://schemas.xmlsoap.org/disco/soap/" />
+  <soap address="http://webf.cych.org.tw/WebTeam/UserIdentify/Authenticate.asmx" xmlns:q2="http://www.cych.org.tw/" binding="q2:AdUserIdentifySoap12" xmlns="http://schemas.xmlsoap.org/disco/soap/" />
+</discovery>

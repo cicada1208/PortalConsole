@@ -1,0 +1,97 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+                    xmlns:models="clr-namespace:Models;assembly=Models"
+                    xmlns:converters="clr-namespace:Lib.Wpf.ValueConverters;assembly=Lib.Wpf"
+                    xmlns:params="clr-namespace:Params;assembly=Params">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Menu.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.TextBlock.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.ToggleButton.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+    
+    <HierarchicalDataTemplate
+        x:Key="HDTemplate.Func.TreeViewItem" 
+        DataType="{x:Type models:FuncGroup}"
+        ItemsSource="{Binding Path=Funcs}">
+        <DockPanel>
+            <materialDesign:PackIcon 
+                Name="FuncTypeIcon"
+                Kind="{Binding FuncType, Converter={converters:FuncTypeIconConverter}}" 
+                VerticalAlignment="Center"/>
+            <ToggleButton Name="FuncUserFavoriteButton"
+                IsChecked="{Binding Favorite}"
+                Command="{Binding DataContext.AddRemoveFuncUserFavoriteCommand, 
+                RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TreeView}}}"
+                CommandParameter="{Binding}"
+                Content="{materialDesign:PackIcon Kind=StarOutline}"
+                materialDesign:ToggleButtonAssist.OnContent="{materialDesign:PackIcon Kind=Star}"
+                Style="{StaticResource MaterialDesignActionToggleButton}"
+                Foreground="DarkOrange" Background="Transparent"
+                VerticalAlignment="Center" Width="20" Height="20" Margin="5,0,0,0"/>
+            <TextBlock 
+                Text="{Binding Path=FuncName}"
+                Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
+                FontWeight="Black" VerticalAlignment="Center" Margin="5,0,10,0"/>
+            <StackPanel DockPanel.Dock="Right" 
+                Visibility="{Binding FuncUserFavoriteId, Converter={converters:NotEmptyVisibilityConverter}}"
+                HorizontalAlignment="Right" VerticalAlignment="Center"
+                Margin="10,0,0,0">
+                <materialDesign:PackIcon
+                    Kind="DragHorizontalVariant"
+                    VerticalAlignment="Center"/>
+            </StackPanel>
+        </DockPanel>
+        <HierarchicalDataTemplate.Triggers>
+            <DataTrigger Binding="{Binding FuncType}" Value="{x:Static params:FuncParam+FuncType.Catalog}">
+                <Setter TargetName="FuncTypeIcon" Property="Visibility" Value="Collapsed" />
+                <Setter TargetName="FuncUserFavoriteButton" Property="Visibility" Value="Collapsed" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding Favorite}" Value="False">
+                <Setter TargetName="FuncUserFavoriteButton" Property="ToolTip" Value="加入最愛" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding Favorite}" Value="True">
+                <Setter TargetName="FuncUserFavoriteButton" Property="ToolTip" Value="移除最愛" />
+            </DataTrigger>
+        </HierarchicalDataTemplate.Triggers>
+    </HierarchicalDataTemplate>
+
+    <Style 
+        x:Key="Style.Func.MenuItem" 
+        BasedOn="{StaticResource MaterialDesignMenuItem}"
+        TargetType="{x:Type MenuItem}">
+        <Setter 
+            Property="Command"
+            Value="{Binding DataContext.SelectFuncCommand, 
+            RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Menu}}}" />
+        <Setter Property="CommandParameter" Value="{Binding}" />
+    </Style>
+
+    <DataTemplate
+        x:Key="DTemplate.Func.TabItem.Header" 
+        DataType="{x:Type models:FuncGroup}">
+        <DockPanel LastChildFill="True">
+            <Button 
+                DockPanel.Dock="Right" Content="X"
+                Command="{Binding DataContext.CloseFuncCommand, 
+                RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}"
+                CommandParameter="{Binding}"
+                Style="{x:Null}">
+                <Button.Template>
+                    <ControlTemplate>
+                        <Label FontWeight="Bold" Content="X" />
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+            <Label Content="{Binding FuncName}" />
+        </DockPanel>
+    </DataTemplate>
+
+    <DataTemplate 
+        x:Key="DTemplate.Func.TabItem.Content" 
+        DataType="{x:Type models:FuncGroup}">
+        <UserControl Content="{Binding ViewInstance}" />
+    </DataTemplate>
+
+</ResourceDictionary>

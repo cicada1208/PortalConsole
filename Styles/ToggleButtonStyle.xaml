@@ -1,0 +1,188 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.Buttons.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <ControlTemplate 
+        x:Key="CTemplate.ToggleButton.NoFade"
+        TargetType="ToggleButton">
+        <Grid>
+            <mah:ClipBorder x:Name="Border"
+                Background="{TemplateBinding Background}"
+                BorderBrush="{TemplateBinding BorderBrush}"
+                BorderThickness="{TemplateBinding BorderThickness}"
+                CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
+                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+            <mah:ClipBorder x:Name="DisabledVisualElement"
+                Background="{DynamicResource MahApps.Brushes.Control.Disabled}"
+                CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
+                IsHitTestVisible="False"
+                Opacity="0"
+                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+            <mah:ContentControlEx x:Name="PART_ContentPresenter"
+                Margin="{TemplateBinding BorderThickness}"
+                Padding="{TemplateBinding Padding}"
+                HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                Content="{TemplateBinding Content}"
+                ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.ContentCharacterCasing)}"
+                ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                ContentTemplate="{TemplateBinding ContentTemplate}"
+                ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                RecognizesAccessKey="{TemplateBinding mah:ControlsHelper.RecognizesAccessKey}"
+                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+        </Grid>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsChecked" Value="True">
+                <Setter TargetName="Border" Property="BorderThickness" Value="2" />
+            </Trigger>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter TargetName="Border" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.MouseOverBorderBrush), Mode=OneWay}" />
+            </Trigger>
+            <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                <Setter TargetName="Border" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.FocusBorderBrush), Mode=OneWay}" />
+                <Setter TargetName="Border" Property="BorderThickness" Value="2" />
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <ControlTemplate 
+        x:Key="CTemplate.ToggleButton"
+        TargetType="ToggleButton">
+        <Grid>
+            <mah:ClipBorder x:Name="Border"
+                Background="{TemplateBinding Background}"
+                BorderBrush="{TemplateBinding BorderBrush}"
+                BorderThickness="{TemplateBinding BorderThickness}"
+                CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
+                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+            <mah:ClipBorder x:Name="DisabledVisualElement"
+                Background="{DynamicResource MahApps.Brushes.Control.Disabled}"
+                CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
+                IsHitTestVisible="False"
+                Opacity="0"
+                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+            <mah:ContentControlEx x:Name="PART_ContentPresenter"
+                Margin="{TemplateBinding BorderThickness}"
+                Padding="{TemplateBinding Padding}"
+                HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                Content="{TemplateBinding Content}"
+                ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.ContentCharacterCasing)}"
+                ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                ContentTemplate="{TemplateBinding ContentTemplate}"
+                ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                RecognizesAccessKey="{TemplateBinding mah:ControlsHelper.RecognizesAccessKey}"
+                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+        </Grid>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsChecked" Value="True">
+                <Setter TargetName="Border" Property="BorderThickness" Value="2" />
+            </Trigger>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter TargetName="Border" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.MouseOverBorderBrush), Mode=OneWay}" />
+            </Trigger>
+            <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                <Setter TargetName="Border" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.FocusBorderBrush), Mode=OneWay}" />
+                <Setter TargetName="Border" Property="BorderThickness" Value="2" />
+            </Trigger>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsEnabled" Value="False" />
+                    <Condition Property="IsChecked" Value="False" />
+                </MultiTrigger.Conditions>
+                <Setter TargetName="DisabledVisualElement" Property="Opacity" Value="0.5" />
+                <Setter TargetName="PART_ContentPresenter" Property="Opacity" Value="0.5" />
+            </MultiTrigger>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsEnabled" Value="False" />
+                    <Condition Property="IsChecked" Value="True" />
+                </MultiTrigger.Conditions>
+                <Setter TargetName="DisabledVisualElement" Property="Opacity" Value="0.5" />
+                <Setter TargetName="PART_ContentPresenter" Property="Opacity" Value="0.8" />
+            </MultiTrigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <Style 
+        x:Key = "Style.ToggleButton.AutoSize" 
+        BasedOn="{StaticResource MahApps.Styles.ToggleButton}"
+        TargetType = "ToggleButton" >
+        <Setter Property="Template" Value="{StaticResource CTemplate.ToggleButton}"/>
+        <Setter Property = "Width" Value = "Auto" />
+        <Setter Property = "Height" Value = "Auto" />
+        <Setter Property = "Padding" Value = "4" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Style.Triggers>
+            <Trigger Property="IsEnabled" Value="True">
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Gray6}"/>
+                <Setter Property="Foreground" Value="{DynamicResource PrimaryHueLightForegroundBrush}"/>
+            </Trigger>
+            <Trigger Property="IsChecked" Value="True">
+                <Setter Property="Background" Value="{DynamicResource PrimaryHueDarkBrush}"/>
+                <Setter Property="Foreground" Value="{DynamicResource PrimaryHueMidForegroundBrush}"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style 
+        x:Key = "Style.ToggleButton.Slim" 
+        BasedOn="{StaticResource Style.ToggleButton.AutoSize}"
+        TargetType = "ToggleButton" >
+        <Setter Property = "MinWidth" Value = "100" />
+    </Style>
+
+    <DropShadowEffect 
+        x:Key="ToggleButton.DropShadowEffect" 
+        Color="Gray" BlurRadius="8" ShadowDepth="5" 
+        Opacity="0.6" Direction="320" />
+
+    <Style 
+        x:Key = "Style.ToggleButton.AutoSize.Shadow" 
+        BasedOn="{StaticResource Style.ToggleButton.AutoSize}"
+        TargetType = "ToggleButton" >
+        <Setter Property ="Margin" Value="2,5,10,5"/>
+        <Style.Triggers>
+            <!--<Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Effect" Value="{x:Null}"/>
+            </Trigger>-->
+            <Trigger Property="IsEnabled" Value="True">
+                <!--DropShadowEffect 會導致字體模糊，RenderOptions.BitmapScalingMode='NearestNeighbor' 可修正此狀況-->
+                <Setter Property="RenderOptions.BitmapScalingMode" Value="NearestNeighbor"/>
+                <Setter Property="Effect" Value="{StaticResource ToggleButton.DropShadowEffect}"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style 
+        x:Key = "Style.ToggleButton.Slim.Shadow" 
+        BasedOn="{StaticResource Style.ToggleButton.Slim}"
+        TargetType = "ToggleButton" >
+        <Setter Property ="Margin" Value="2,5,10,5"/>
+        <Style.Triggers>
+            <Trigger Property="IsEnabled" Value="True">
+                <Setter Property="RenderOptions.BitmapScalingMode" Value="NearestNeighbor"/>
+                <Setter Property="Effect" Value="{StaticResource ToggleButton.DropShadowEffect}"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style 
+        x:Key = "Style.ToggleButton.AutoSize.Shadow.NoFade" 
+        BasedOn="{StaticResource Style.ToggleButton.AutoSize.Shadow}"
+        TargetType = "ToggleButton" >
+        <Setter Property="Template" Value="{StaticResource CTemplate.ToggleButton.NoFade}"/>
+    </Style>
+
+    <Style 
+        x:Key = "Style.ToggleButton.Slim.Shadow.NoFade" 
+        BasedOn="{StaticResource Style.ToggleButton.Slim.Shadow}"
+        TargetType = "ToggleButton" >
+        <Setter Property="Template" Value="{StaticResource CTemplate.ToggleButton.NoFade}"/>
+    </Style>
+
+</ResourceDictionary>
